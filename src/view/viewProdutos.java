@@ -12,6 +12,7 @@ public class viewProdutos extends javax.swing.JFrame {
 
     MoProdutos moproduto = new MoProdutos();
     ProdutosControle controle = new ProdutosControle();
+    String receberGrupo;
     
     public viewProdutos() {
         initComponents();
@@ -61,6 +62,11 @@ public class viewProdutos extends javax.swing.JFrame {
         jLabel2.setText("Grupo");
 
         jButtonBuscarGrupo.setText("Grupo");
+        jButtonBuscarGrupo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarGrupoActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Unid Med");
 
@@ -194,6 +200,13 @@ public class viewProdutos extends javax.swing.JFrame {
             Logger.getLogger(viewProdutos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonGravarActionPerformed
+
+    private void jButtonBuscarGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarGrupoActionPerformed
+         BuscaGrupo dialog = new BuscaGrupo(new javax.swing.JFrame(), true);
+         dialog.setVisible(true);
+           receberGrupo = dialog.getItenSelecionado();
+        jTextFieldGrupo.setText(receberGrupo);
+    }//GEN-LAST:event_jButtonBuscarGrupoActionPerformed
 
     /**
      * @param args the command line arguments
