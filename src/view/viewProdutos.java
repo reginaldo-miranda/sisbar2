@@ -1,9 +1,9 @@
-
 package view;
 
 import controle.ProdutosControle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.MoClientes;
 import model.MoProdutos;
@@ -13,15 +13,16 @@ public class viewProdutos extends javax.swing.JFrame {
     MoProdutos moproduto = new MoProdutos();
     ProdutosControle controle = new ProdutosControle();
     String receberGrupo;
-    
+
     public viewProdutos() {
         initComponents();
         carregarDados();
     }
-      public void carregarDados(){
-         DefaultTableModel modelo = (DefaultTableModel) jTableViewProdutos.getModel();
-         modelo.setRowCount(0);
-            for (MoProdutos produto : controle.carregaProd()) {
+
+    public void carregarDados() {
+        DefaultTableModel modelo = (DefaultTableModel) jTableViewProdutos.getModel();
+        modelo.setRowCount(0);
+        for (MoProdutos produto : controle.carregaProd()) {
             modelo.addRow(new Object[]{produto.getId(), produto.getDescricao()});
         }
     }
@@ -82,6 +83,11 @@ public class viewProdutos extends javax.swing.JFrame {
                 "Id", "Descricao"
             }
         ));
+        jTableViewProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableViewProdutosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableViewProdutos);
 
         jButtonGravar.setText("Gravar");
@@ -202,11 +208,25 @@ public class viewProdutos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonGravarActionPerformed
 
     private void jButtonBuscarGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarGrupoActionPerformed
-         BuscaGrupo dialog = new BuscaGrupo(new javax.swing.JFrame(), true);
-         dialog.setVisible(true);
-           receberGrupo = dialog.getItenSelecionado();
+        BuscaGrupo dialog = new BuscaGrupo(new javax.swing.JFrame(), true);
+        dialog.setVisible(true);
+        receberGrupo = dialog.getDescricaoSelecionado();
         jTextFieldGrupo.setText(receberGrupo);
     }//GEN-LAST:event_jButtonBuscarGrupoActionPerformed
+
+    private void jTableViewProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableViewProdutosMouseClicked
+        int linha = jTableViewProdutos.getSelectedRow();
+               if (linha == -1){
+              JOptionPane.showMessageDialog(null, "Selecione um produto");
+         }else{
+              jTextFieldId.setText(jTableViewProdutos.getValueAt(linha, 0).toString());
+              jTextFieldDescricao.setText((jTableViewProdutos.getValueAt(linha, 1).toString()));
+              jTextFieldGrupo.setText((jTableViewProdutos.getValueAt(linha, 2).toString()));
+              jTextFieldQde.setText(jTableViewProdutos.getValueAt(linha , 3).toString());
+              jTextFieldQde.setText(Double.toString(moproduto.getQde()));
+              
+         }
+    }//GEN-LAST:event_jTableViewProdutosMouseClicked
 
     /**
      * @param args the command line arguments

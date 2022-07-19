@@ -22,7 +22,6 @@ public class BuscaGrupo extends javax.swing.JDialog {
         initComponents();
         carregarDados();
     }
-    
          public void carregarDados(){
          DefaultTableModel modelo = (DefaultTableModel) jTableGrupo.getModel();
          modelo.setRowCount(0);

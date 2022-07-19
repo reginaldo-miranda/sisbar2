@@ -7,6 +7,7 @@ package view;
 import controle.GrupoControle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.MoGrupo;
 import model.MoProdutos;
@@ -16,7 +17,7 @@ import model.MoProdutos;
  * @author reginaldo
  */
 public class viewGrupo extends javax.swing.JFrame {
-
+   
     GrupoControle controle = new GrupoControle();
     public viewGrupo() {
         initComponents();
@@ -45,6 +46,7 @@ public class viewGrupo extends javax.swing.JFrame {
         jButtonGravar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Grupo");
 
         jButtonSair.setText("Sair");
         jButtonSair.addActionListener(new java.awt.event.ActionListener() {
@@ -71,6 +73,11 @@ public class viewGrupo extends javax.swing.JFrame {
                 "Codigo", "Descricao", "% Desconto"
             }
         ));
+        jTableViewGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableViewGrupoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableViewGrupo);
 
         jButtonGravar.setText("Gravar");
@@ -146,36 +153,27 @@ public class viewGrupo extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(viewGrupo.class.getName()).log(Level.SEVERE, null, ex);
         }
+        carregarDados();
     }//GEN-LAST:event_jButtonGravarActionPerformed
+
+    private void jTableViewGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableViewGrupoMouseClicked
+       
+        int linha = jTableViewGrupo.getSelectedRow();
+         if (linha == -1){
+              JOptionPane.showMessageDialog(null, "Selecione um produto");
+         }else{
+              jTextField1.setText(jTableViewGrupo.getValueAt(linha, 0).toString());
+              jTextFieldNomeGrupo.setText((jTableViewGrupo.getValueAt(linha, 1).toString()));
+              jTextFieldDesconto.setText((jTableViewGrupo.getValueAt(linha, 2).toString()));
+              
+         }
+    }//GEN-LAST:event_jTableViewGrupoMouseClicked
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(viewGrupo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(viewGrupo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(viewGrupo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(viewGrupo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
+      
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new viewGrupo().setVisible(true);
