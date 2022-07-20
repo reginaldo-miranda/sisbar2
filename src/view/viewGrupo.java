@@ -5,6 +5,9 @@
 package view;
 
 import controle.GrupoControle;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -17,20 +20,26 @@ import model.MoProdutos;
  * @author reginaldo
  */
 public class viewGrupo extends javax.swing.JFrame {
-   
+
     GrupoControle controle = new GrupoControle();
+    MoGrupo mogrupo = new MoGrupo();
+    Integer recebeId;
+    String idexistente = "";
+
     public viewGrupo() {
         initComponents();
         carregarDados();
+        jTextField1.setEditable(false);
     }
 
-     public void carregarDados(){
-         DefaultTableModel modelo = (DefaultTableModel) jTableViewGrupo.getModel();
-         modelo.setRowCount(0);
-            for (MoGrupo grupo : controle.carregaGrupo()) {
-            modelo.addRow(new Object[]{grupo.getId(),grupo.getDESCRICAO(),grupo.getDESCONTO()});
+    public void carregarDados() {
+        DefaultTableModel modelo = (DefaultTableModel) jTableViewGrupo.getModel();
+        modelo.setRowCount(0);
+        for (MoGrupo grupo : controle.carregaGrupo()) {
+            modelo.addRow(new Object[]{grupo.getId(), grupo.getDESCRICAO(), grupo.getDESCONTO()});
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -145,11 +154,18 @@ public class viewGrupo extends javax.swing.JFrame {
 
     private void jButtonGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGravarActionPerformed
         MoGrupo mogrupo = new MoGrupo();
+
+        idexistente = jTextField1.getText();
         mogrupo.setDESCONTO(jTextFieldDesconto.getText());
         mogrupo.setDESCRICAO(jTextFieldNomeGrupo.getText());
+
         GrupoControle grupocontrole = new GrupoControle();
+        if (idexistente != jTextField1.getText()) {
+            mogrupo.setId(Integer.parseInt(jTextField1.getText()));
+        }
         try {
             grupocontrole.salvar(mogrupo);
+
         } catch (Exception ex) {
             Logger.getLogger(viewGrupo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -157,23 +173,32 @@ public class viewGrupo extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonGravarActionPerformed
 
     private void jTableViewGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableViewGrupoMouseClicked
-       
+
         int linha = jTableViewGrupo.getSelectedRow();
-         if (linha == -1){
-              JOptionPane.showMessageDialog(null, "Selecione um produto");
-         }else{
-              jTextField1.setText(jTableViewGrupo.getValueAt(linha, 0).toString());
-              jTextFieldNomeGrupo.setText((jTableViewGrupo.getValueAt(linha, 1).toString()));
-              jTextFieldDesconto.setText((jTableViewGrupo.getValueAt(linha, 2).toString()));
-              
-         }
+        if (linha == -1) {
+            JOptionPane.showMessageDialog(null, "Selecione um produto");
+        } else {
+            jTextField1.setText(jTableViewGrupo.getValueAt(linha, 0).toString());
+            recebeId = (Integer) jTableViewGrupo.getValueAt(linha, 0);
+
+            MoGrupo a = controle.consultaPorId(MoGrupo.class, recebeId);
+
+            if (a == null) {
+                System.out.println("a e´vazio)");
+            } else {
+                jTextFieldDesconto.setText(a.getDESCONTO());
+                jTextFieldNomeGrupo.setText(a.getDESCRICAO());
+
+            }
+
+        }
     }//GEN-LAST:event_jTableViewGrupoMouseClicked
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-      
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new viewGrupo().setVisible(true);

@@ -16,10 +16,10 @@ public class DaoGenerico<T extends EntidadeBase> {
            EntityManager em = getEM();
            try {
                em.getTransaction().begin();
-               if(t.getId() == 0){
+               if(t.getId() == null){
                    em.persist(t);
                }else{
-                   if (!em.contains(t)){
+                   if (em.contains(t)){
                        if(em.find(t.getClass(), t.getId()) == null){
                            throw new Exception("erro ao atualiza ");
                        }
@@ -46,4 +46,17 @@ public class DaoGenerico<T extends EntidadeBase> {
                em.close();
            }
        }
+       
+       public T consultaPorId(Class<T> clazz, Integer id){
+           EntityManager em = getEM();
+           T t = null;
+           try{
+               t = em.find(clazz, id);
+           }finally{
+               em.close();
+           }
+           return t;
+           
+       }
+       
 }
