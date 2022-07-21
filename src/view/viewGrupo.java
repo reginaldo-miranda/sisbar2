@@ -160,16 +160,19 @@ public class viewGrupo extends javax.swing.JFrame {
         mogrupo.setDESCRICAO(jTextFieldNomeGrupo.getText());
 
         GrupoControle grupocontrole = new GrupoControle();
-        if (idexistente != jTextField1.getText()) {
+        if (!idexistente.isEmpty()) {
             mogrupo.setId(Integer.parseInt(jTextField1.getText()));
+
         }
         try {
             grupocontrole.salvar(mogrupo);
-
+            carregarDados();
         } catch (Exception ex) {
             Logger.getLogger(viewGrupo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        carregarDados();
+        jTextFieldDesconto.setText("");
+        jTextFieldNomeGrupo.setText("");
+
     }//GEN-LAST:event_jButtonGravarActionPerformed
 
     private void jTableViewGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableViewGrupoMouseClicked

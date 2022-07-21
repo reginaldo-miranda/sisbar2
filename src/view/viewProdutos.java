@@ -13,6 +13,8 @@ public class viewProdutos extends javax.swing.JFrame {
     MoProdutos moproduto = new MoProdutos();
     ProdutosControle controle = new ProdutosControle();
     String receberGrupo;
+    Integer recebeId;
+    String idexistente = "";
 
     public viewProdutos() {
         initComponents();
@@ -216,16 +218,18 @@ public class viewProdutos extends javax.swing.JFrame {
 
     private void jTableViewProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableViewProdutosMouseClicked
         int linha = jTableViewProdutos.getSelectedRow();
-               if (linha == -1){
-              JOptionPane.showMessageDialog(null, "Selecione um produto");
-         }else{
-              jTextFieldId.setText(jTableViewProdutos.getValueAt(linha, 0).toString());
-              jTextFieldDescricao.setText((jTableViewProdutos.getValueAt(linha, 1).toString()));
-              jTextFieldGrupo.setText((jTableViewProdutos.getValueAt(linha, 2).toString()));
-              jTextFieldQde.setText(jTableViewProdutos.getValueAt(linha , 3).toString());
-              jTextFieldQde.setText(Double.toString(moproduto.getQde()));
-              
-         }
+        if (linha == -1) {
+            JOptionPane.showMessageDialog(null, "Selecione um produto");
+        } else {
+            jTextFieldId.setText(jTableViewProdutos.getValueAt(linha, 0).toString());
+            recebeId = Integer.parseInt(jTextFieldId.getText());
+            controle.consultaPorId(MoProdutos.class, recebeId);
+            //jTextFieldDescricao.setText((jTableViewProdutos.getValueAt(linha, 1).toString()));
+            // jTextFieldGrupo.setText((jTableViewProdutos.getValueAt(linha, 2).toString()));
+            //  jTextFieldQde.setText(jTableViewProdutos.getValueAt(linha , 3).toString());
+             jTextFieldQde.setText(Double.toString(moproduto.getQde()));
+
+        }
     }//GEN-LAST:event_jTableViewProdutosMouseClicked
 
     /**
