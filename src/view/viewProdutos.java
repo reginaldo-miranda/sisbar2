@@ -1,8 +1,12 @@
 package view;
 
 import controle.ProdutosControle;
+import dao.DaoGenerico;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.MoClientes;
@@ -15,6 +19,7 @@ public class viewProdutos extends javax.swing.JFrame {
     String receberGrupo;
     Integer recebeId;
     String idexistente = "";
+    String descricao;
 
     public viewProdutos() {
         initComponents();
@@ -135,12 +140,15 @@ public class viewProdutos extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
                                     .addComponent(jTextFieldPVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButtonGravar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton2)))
-                        .addGap(0, 13, Short.MAX_VALUE))))
+                        .addGap(0, 32, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,11 +185,11 @@ public class viewProdutos extends javax.swing.JFrame {
                         .addComponent(jTextFieldUnidMed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonGravar)
                     .addComponent(jButton2))
-                .addGap(0, 60, Short.MAX_VALUE))
+                .addGap(0, 48, Short.MAX_VALUE))
         );
 
         pack();
@@ -217,18 +225,31 @@ public class viewProdutos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBuscarGrupoActionPerformed
 
     private void jTableViewProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableViewProdutosMouseClicked
+       
+        
         int linha = jTableViewProdutos.getSelectedRow();
+        
+         MoProdutos moproduto = new MoProdutos();
         if (linha == -1) {
             JOptionPane.showMessageDialog(null, "Selecione um produto");
         } else {
+            DaoGenerico dao = new DaoGenerico();
+            List<MoProdutos> lista = (List<MoProdutos>) dao.consultaPorId(MoProdutos.class, recebeId);
+            for(MoProduto p : lista){
+                
+            }
+             
             jTextFieldId.setText(jTableViewProdutos.getValueAt(linha, 0).toString());
             recebeId = Integer.parseInt(jTextFieldId.getText());
             controle.consultaPorId(MoProdutos.class, recebeId);
             //jTextFieldDescricao.setText((jTableViewProdutos.getValueAt(linha, 1).toString()));
             // jTextFieldGrupo.setText((jTableViewProdutos.getValueAt(linha, 2).toString()));
             //  jTextFieldQde.setText(jTableViewProdutos.getValueAt(linha , 3).toString());
-             jTextFieldQde.setText(Double.toString(moproduto.getQde()));
-
+            
+            
+           
+            
+              
         }
     }//GEN-LAST:event_jTableViewProdutosMouseClicked
 

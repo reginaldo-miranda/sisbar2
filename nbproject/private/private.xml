@@ -5,7 +5,6 @@
         <group>
             <file>file:/C:/laragon/www/sisbar2/src/view/viewProdutos.java</file>
             <file>file:/C:/laragon/www/sisbar2/src/view/viewGrupo.java</file>
-            <file>file:/C:/laragon/www/sisbar2/src/controle/GrupoControle.java</file>
             <file>file:/C:/laragon/www/sisbar2/src/dao/DaoGenerico.java</file>
             <file>file:/C:/laragon/www/sisbar2/src/controle/ProdutosControle.java</file>
         </group>

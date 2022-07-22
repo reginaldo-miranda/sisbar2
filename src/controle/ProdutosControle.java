@@ -2,6 +2,7 @@
 package controle;
 
 import dao.DaoGenerico;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import model.MoClientes;
@@ -21,4 +22,6 @@ public class ProdutosControle extends DaoGenerico<MoProdutos>{
         return consulta.getResultList();
 
     }  
+   
+   
 }
