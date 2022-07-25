@@ -7,12 +7,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@NamedQuery(name = "MoProdutos.todos", query = "SELECT prod FROM MoProdutos prod")
-
+@NamedQueries({
+        
+    @NamedQuery(name = "MoProdutos.todos", query = "SELECT prod FROM MoProdutos prod"),
+            
+    @NamedQuery(name = "Moprodutos.id", query = "SELECT pr FROM MoProdutos pr where pr.Id = :idprod")
+})
 @Table(name = "produtos")
 public class MoProdutos implements EntidadeBase, Serializable{
 

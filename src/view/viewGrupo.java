@@ -1,24 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package view;
 
 import controle.GrupoControle;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.MoGrupo;
-import model.MoProdutos;
 
-/**
- *
- * @author reginaldo
- */
+
 public class viewGrupo extends javax.swing.JFrame {
 
     GrupoControle controle = new GrupoControle();
@@ -53,6 +43,7 @@ public class viewGrupo extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableViewGrupo = new javax.swing.JTable();
         jButtonGravar = new javax.swing.JButton();
+        jButtonExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Grupo");
@@ -96,6 +87,13 @@ public class viewGrupo extends javax.swing.JFrame {
             }
         });
 
+        jButtonExcluir.setText("Excluir");
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -115,7 +113,10 @@ public class viewGrupo extends javax.swing.JFrame {
                                 .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonGravar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonGravar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonExcluir)))
                         .addGap(0, 1, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -136,7 +137,9 @@ public class viewGrupo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButtonGravar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonGravar)
+                    .addComponent(jButtonExcluir))
                 .addGap(0, 27, Short.MAX_VALUE))
         );
 
@@ -153,13 +156,13 @@ public class viewGrupo extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldNomeGrupoActionPerformed
 
     private void jButtonGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGravarActionPerformed
-        MoGrupo mogrupo = new MoGrupo();
-
+     
         idexistente = jTextField1.getText();
         mogrupo.setDESCONTO(jTextFieldDesconto.getText());
         mogrupo.setDESCRICAO(jTextFieldNomeGrupo.getText());
 
         GrupoControle grupocontrole = new GrupoControle();
+        
         if (!idexistente.isEmpty()) {
             mogrupo.setId(Integer.parseInt(jTextField1.getText()));
 
@@ -189,6 +192,7 @@ public class viewGrupo extends javax.swing.JFrame {
             if (a == null) {
                 System.out.println("a e´vazio)");
             } else {
+                
                 jTextFieldDesconto.setText(a.getDESCONTO());
                 jTextFieldNomeGrupo.setText(a.getDESCRICAO());
 
@@ -196,6 +200,12 @@ public class viewGrupo extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jTableViewGrupoMouseClicked
+
+    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
+        idexistente = jTextField1.getText();
+        controle.remove(MoGrupo.class, Integer.parseInt(idexistente));
+        carregarDados();
+    }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,6 +220,7 @@ public class viewGrupo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonExcluir;
     private javax.swing.JButton jButtonGravar;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JLabel jLabel1;

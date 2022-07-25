@@ -1,28 +1,30 @@
-
 package view;
 
 import controle.ClientesControle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.MoClientes;
 
-
 public class viewClientes extends javax.swing.JFrame {
 
-   MoClientes mocliente = new MoClientes();
-   ClientesControle controle = new ClientesControle();
-   private Integer pegarcodigo;
-   
+    MoClientes mocliente = new MoClientes();
+    ClientesControle controle = new ClientesControle();
+
+    private Integer pegarcodigo;
+    String idexistente;
+
     public viewClientes() {
         initComponents();
         carregarDados();
+        jTextFieldID.setEditable(false);
     }
-    
-    public void carregarDados(){
-         DefaultTableModel modelo = (DefaultTableModel) jTableViewClientes.getModel();
-         modelo.setRowCount(0);
-            for (MoClientes clie : controle.carregaCli()) {
+
+    public void carregarDados() {
+        DefaultTableModel modelo = (DefaultTableModel) jTableViewClientes.getModel();
+        modelo.setRowCount(0);
+        for (MoClientes clie : controle.carregaCli()) {
             modelo.addRow(new Object[]{clie.getId(), clie.getNome(), clie.getFone()});
         }
     }
@@ -37,7 +39,7 @@ public class viewClientes extends javax.swing.JFrame {
         jTextFieldFone = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jButtonGravar = new javax.swing.JButton();
         jButtonDelete = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableViewClientes = new javax.swing.JTable();
@@ -63,10 +65,10 @@ public class viewClientes extends javax.swing.JFrame {
 
         jLabel2.setText("Fone");
 
-        jButton1.setText("Gravar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonGravar.setText("Gravar");
+        jButtonGravar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonGravarActionPerformed(evt);
             }
         });
 
@@ -85,6 +87,11 @@ public class viewClientes extends javax.swing.JFrame {
                 "Id", "Nome", "Fone"
             }
         ));
+        jTableViewClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableViewClientesMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTableViewClientes);
 
         jButtonSair.setText("Sair");
@@ -102,7 +109,7 @@ public class viewClientes extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(jButtonGravar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonDelete))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -135,7 +142,7 @@ public class viewClientes extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(jButtonGravar)
                     .addComponent(jButtonDelete))
                 .addContainerGap())
         );
@@ -144,30 +151,44 @@ public class viewClientes extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        MoClientes mocliente = new MoClientes();
+    private void jButtonGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGravarActionPerformed
+
         mocliente.setNome(jTextFieldNome.getText());
         mocliente.setFone(jTextFieldFone.getText());
-        
-        ClientesControle clienteCtr = new ClientesControle();
+        idexistente = jTextFieldID.getText();
+        if (!idexistente.isEmpty()) {
+            mocliente.setId_cliente(Integer.parseInt(jTextFieldID.getText()));
+        }
         try {
-            clienteCtr.salvar(mocliente);
+            controle.salvar(mocliente);
         } catch (Exception ex) {
             Logger.getLogger(viewClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+        carregarDados();
+    }//GEN-LAST:event_jButtonGravarActionPerformed
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
-         
-          MoClientes mocliente = new  MoClientes();
-          pegarcodigo = jTableViewClientes.getSelectedRow();
-          controle.remove(MoClientes.class, pegarcodigo);
-          
+        idexistente = jTextFieldID.getText();
+        controle.remove(MoClientes.class, Integer.parseInt(idexistente));
+        carregarDados();
+
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
         dispose();
     }//GEN-LAST:event_jButtonSairActionPerformed
+
+    private void jTableViewClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableViewClientesMouseClicked
+        int linha = jTableViewClientes.getSelectedRow();
+        if (linha == -1) {
+            JOptionPane.showMessageDialog(null, "Selecione um Cliente");
+        } else {
+            jTextFieldID.setText(jTableViewClientes.getValueAt(linha, 0).toString());
+            jTextFieldNome.setText(jTableViewClientes.getValueAt(linha, 1).toString());
+            jTextFieldFone.setText(jTableViewClientes.getValueAt(linha, 2).toString());
+
+        }
+    }//GEN-LAST:event_jTableViewClientesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -205,8 +226,8 @@ public class viewClientes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonDelete;
+    private javax.swing.JButton jButtonGravar;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

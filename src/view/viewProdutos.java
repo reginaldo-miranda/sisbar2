@@ -16,14 +16,16 @@ public class viewProdutos extends javax.swing.JFrame {
 
     MoProdutos moproduto = new MoProdutos();
     ProdutosControle controle = new ProdutosControle();
+
     String receberGrupo;
     Integer recebeId;
     String idexistente = "";
-    String descricao;
+    //  String descricao;
 
     public viewProdutos() {
         initComponents();
         carregarDados();
+        jTextFieldId.setEditable(false);
     }
 
     public void carregarDados() {
@@ -32,7 +34,17 @@ public class viewProdutos extends javax.swing.JFrame {
         for (MoProdutos produto : controle.carregaProd()) {
             modelo.addRow(new Object[]{produto.getId(), produto.getDescricao()});
         }
+       
     }
+     public void limparTela(){
+            jTextFieldGrupo.setText("");
+            jTextFieldId.setText("");                   ;
+            jTextFieldPVenda.setText("");
+            jTextFieldDescricao.setText("");
+            jTextFieldQde.setText("");
+            jTextFieldUnidMed.setText("");
+                    
+        }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -54,7 +66,7 @@ public class viewProdutos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableViewProdutos = new javax.swing.JTable();
         jButtonGravar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButtonExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -104,7 +116,12 @@ public class viewProdutos extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Excluir");
+        jButtonExcluir.setText("Excluir");
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,7 +160,7 @@ public class viewProdutos extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButtonGravar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2)))
+                                .addComponent(jButtonExcluir)))
                         .addGap(0, 32, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -188,7 +205,7 @@ public class viewProdutos extends javax.swing.JFrame {
                 .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonGravar)
-                    .addComponent(jButton2))
+                    .addComponent(jButtonExcluir))
                 .addGap(0, 48, Short.MAX_VALUE))
         );
 
@@ -203,18 +220,25 @@ public class viewProdutos extends javax.swing.JFrame {
     private void jButtonGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGravarActionPerformed
 
         MoProdutos moproduto = new MoProdutos();
+
+        idexistente = jTextFieldId.getText();
+
         moproduto.setDescricao(jTextFieldDescricao.getText());
         moproduto.setGrupo(jTextFieldGrupo.getText());
         moproduto.setPreco_venda(Double.parseDouble(jTextFieldPVenda.getText()));
         moproduto.setQde(Double.parseDouble(jTextFieldQde.getText()));
         moproduto.setUnid_medida(jTextFieldUnidMed.getText());
 
-        ProdutosControle produto = new ProdutosControle();
+        if (!idexistente.isEmpty()) {
+            moproduto.setId(Integer.parseInt(jTextFieldId.getText()));
+        }
         try {
-            produto.salvar(moproduto);
+            controle.salvar(moproduto);
         } catch (Exception ex) {
             Logger.getLogger(viewProdutos.class.getName()).log(Level.SEVERE, null, ex);
         }
+        carregarDados();
+        limparTela();
     }//GEN-LAST:event_jButtonGravarActionPerformed
 
     private void jButtonBuscarGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarGrupoActionPerformed
@@ -225,33 +249,37 @@ public class viewProdutos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBuscarGrupoActionPerformed
 
     private void jTableViewProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableViewProdutosMouseClicked
-       
-        
+
         int linha = jTableViewProdutos.getSelectedRow();
-        
-         MoProdutos moproduto = new MoProdutos();
+
+        MoProdutos moproduto = new MoProdutos();
         if (linha == -1) {
             JOptionPane.showMessageDialog(null, "Selecione um produto");
         } else {
-            DaoGenerico dao = new DaoGenerico();
-            List<MoProdutos> lista = (List<MoProdutos>) dao.consultaPorId(MoProdutos.class, recebeId);
-            for(MoProduto p : lista){
-                
-            }
-             
             jTextFieldId.setText(jTableViewProdutos.getValueAt(linha, 0).toString());
             recebeId = Integer.parseInt(jTextFieldId.getText());
-            controle.consultaPorId(MoProdutos.class, recebeId);
-            //jTextFieldDescricao.setText((jTableViewProdutos.getValueAt(linha, 1).toString()));
-            // jTextFieldGrupo.setText((jTableViewProdutos.getValueAt(linha, 2).toString()));
-            //  jTextFieldQde.setText(jTableViewProdutos.getValueAt(linha , 3).toString());
-            
-            
-           
-            
-              
+            List<MoProdutos> prod = controle.carregaProdPId(recebeId);
+            for (MoProdutos p : prod) {
+                jTextFieldDescricao.setText(p.getDescricao());
+                jTextFieldUnidMed.setText(p.getUnid_medida());
+                jTextFieldGrupo.setText(p.getGrupo());
+                jTextFieldPVenda.setText(Double.toString(p.getPreco_venda()));
+                jTextFieldQde.setText(Double.toString(p.getQde()));
+            }
+
         }
     }//GEN-LAST:event_jTableViewProdutosMouseClicked
+
+    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
+       idexistente = jTextFieldId.getText();
+       if(idexistente.isEmpty()){
+           JOptionPane.showMessageDialog(null, "produto nao existe");
+       }
+       controle.remove(MoProdutos.class, Integer.parseInt(idexistente));
+       limparTela();
+       carregarDados();
+       jTextFieldId.requestFocus();
+    }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -289,8 +317,8 @@ public class viewProdutos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonBuscarGrupo;
+    private javax.swing.JButton jButtonExcluir;
     private javax.swing.JButton jButtonGravar;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JLabel jLabel1;
