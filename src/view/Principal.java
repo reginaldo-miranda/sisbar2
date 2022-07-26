@@ -17,6 +17,9 @@ public class Principal extends javax.swing.JFrame {
         jMenuItemProdutos = new javax.swing.JMenuItem();
         jMenuItemGrupo = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItemPDV = new javax.swing.JMenuItem();
+        jMenuOrcamento = new javax.swing.JMenu();
+        jMenuItemOrcamentos = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -50,8 +53,34 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("Vendas");
+
+        jMenuItemPDV.setText("PDV");
+        jMenuItemPDV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemPDVActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemPDV);
+
         jMenuBar1.add(jMenu2);
+
+        jMenuOrcamento.setText("Orcamentos");
+        jMenuOrcamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuOrcamentoActionPerformed(evt);
+            }
+        });
+
+        jMenuItemOrcamentos.setText("Orcamentos");
+        jMenuItemOrcamentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemOrcamentosActionPerformed(evt);
+            }
+        });
+        jMenuOrcamento.add(jMenuItemOrcamentos);
+
+        jMenuBar1.add(jMenuOrcamento);
 
         setJMenuBar(jMenuBar1);
 
@@ -76,14 +105,27 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItemProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemProdutosActionPerformed
-        viewProdutos produto = new viewProdutos();
-        produto.setVisible(true);
+        
     }//GEN-LAST:event_jMenuItemProdutosActionPerformed
 
     private void jMenuItemGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGrupoActionPerformed
-       viewGrupo grupo = new viewGrupo();
-       grupo.setVisible(true);
+        viewGrupo grupo = new viewGrupo();
+        grupo.setVisible(true);
     }//GEN-LAST:event_jMenuItemGrupoActionPerformed
+
+    private void jMenuOrcamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuOrcamentoActionPerformed
+
+    }//GEN-LAST:event_jMenuOrcamentoActionPerformed
+
+    private void jMenuItemOrcamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOrcamentosActionPerformed
+        viewOrcamentos orc = new viewOrcamentos();
+        orc.setVisible(true);
+    }//GEN-LAST:event_jMenuItemOrcamentosActionPerformed
+
+    private void jMenuItemPDVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPDVActionPerformed
+        viewPdv pdv = new viewPdv();
+        pdv.setVisible(true);
+    }//GEN-LAST:event_jMenuItemPDVActionPerformed
 
     /**
      * @param args the command line arguments
@@ -127,6 +169,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItemGrupo;
+    private javax.swing.JMenuItem jMenuItemOrcamentos;
+    private javax.swing.JMenuItem jMenuItemPDV;
     private javax.swing.JMenuItem jMenuItemProdutos;
+    private javax.swing.JMenu jMenuOrcamento;
     // End of variables declaration//GEN-END:variables
 }

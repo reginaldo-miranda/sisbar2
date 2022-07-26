@@ -22,4 +22,14 @@ public class ClientesControle extends DaoGenerico<MoClientes> {
         return consulta.getResultList();
 
     }
+
+    public java.util.List<MoClientes> getListaCli() {
+
+        // EntityManager gerente = FabricaGerenciadorEntidades.getGerente();
+        EntityManager em = getEM();
+
+        TypedQuery<MoClientes> consulta = (TypedQuery<MoClientes>) em.createNamedQuery("MoClientes.todos", MoClientes.class);
+
+        return consulta.getResultList();
+    }
 }
