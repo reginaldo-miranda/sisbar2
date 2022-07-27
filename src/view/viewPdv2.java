@@ -4,16 +4,30 @@
  */
 package view;
 
+import controle.Pdv2Controle;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import static java.time.Instant.now;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.MoPdv;
+
 /**
  *
  * @author suporte11-pc
  */
 public class viewPdv2 extends javax.swing.JFrame {
 
-    private String receber,  receberCli = null;
+    Pdv2Controle controle = new Pdv2Controle();
+    MoPdv mopdv = new MoPdv();
+
+    private String receber, receberCli = null;
     private Integer id_prod, receb_id_cliente, receberVenda;
-    
-    private String receberDescProd,receberPreco, recebeIdProd, receberIdSelecionado;
+
+    private String receberDescProd, receberPreco, recebeIdProd, receberIdSelecionado;
+
     /**
      * Creates new form viewPdv2
      */
@@ -34,7 +48,7 @@ public class viewPdv2 extends javax.swing.JFrame {
         jTextFieldNumVenda = new javax.swing.JTextField();
         jButtonSair = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldIdClinete = new javax.swing.JTextField();
         jTextFieldCliente = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jButtonBuscaCli = new javax.swing.JButton();
@@ -77,7 +91,7 @@ public class viewPdv2 extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Codigo", "Descricao", "Qde", "Preco"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -96,6 +110,11 @@ public class viewPdv2 extends javax.swing.JFrame {
         });
 
         jButtonNovoCupom.setText("Novo");
+        jButtonNovoCupom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNovoCupomActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -113,7 +132,7 @@ public class viewPdv2 extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField1))
+                                    .addComponent(jTextFieldIdClinete))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
@@ -169,7 +188,7 @@ public class viewPdv2 extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldIdClinete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonBuscaCli)))
                     .addComponent(jTextFieldTotalVenda))
@@ -204,21 +223,38 @@ public class viewPdv2 extends javax.swing.JFrame {
         jTextFieldCliente.setText(receberCli);
 
         receb_id_cliente = dialog.getId_cli_selecionado();
-        jTextField1.setText(Integer.toString(receb_id_cliente));
+        jTextFieldIdClinete.setText(Integer.toString(receb_id_cliente));
     }//GEN-LAST:event_jButtonBuscaCliActionPerformed
 
     private void jButtonBuscarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarProdutoActionPerformed
-         BuscaProduto dialog = new BuscaProduto(new javax.swing.JFrame(), true);
-         dialog.setVisible(true);
-         receberIdSelecionado = dialog.getProdIdSelecionado();
-         receberDescProd = dialog.getDescSelecionado();
-         receberPreco = dialog.getPrecoSelecionado();
-         
-         jTextFieldCodigoProd.setText(receberIdSelecionado);
-         jTextFieldDescricaoProd.setText(receberDescProd);
-         jTextFieldprecoUnit.setText(receberPreco);
-         
+        BuscaProduto dialog = new BuscaProduto(new javax.swing.JFrame(), true);
+        dialog.setVisible(true);
+        receberIdSelecionado = dialog.getProdIdSelecionado();
+        receberDescProd = dialog.getDescSelecionado();
+        receberPreco = dialog.getPrecoSelecionado();
+
+        jTextFieldCodigoProd.setText(receberIdSelecionado);
+        jTextFieldDescricaoProd.setText(receberDescProd);
+        jTextFieldprecoUnit.setText(receberPreco);
+
     }//GEN-LAST:event_jButtonBuscarProdutoActionPerformed
+
+    private void jButtonNovoCupomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoCupomActionPerformed
+
+        mopdv.setId_clientes(Integer.parseInt(jTextFieldCliente.getText()));
+        
+        /*
+        DateFormat dateformat = new SimpleDateFormat("dd/MM/yyy");
+        Calendar c = Calendar.getInstance();
+      
+        // mopdv.setData(c.getTime());
+        */
+        try {
+            controle.salvar(mopdv);
+        } catch (Exception ex) {
+            Logger.getLogger(viewPdv2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonNovoCupomActionPerformed
 
     /**
      * @param args the command line arguments
@@ -268,10 +304,10 @@ public class viewPdv2 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextFieldCliente;
     private javax.swing.JTextField jTextFieldCodigoProd;
     private javax.swing.JTextField jTextFieldDescricaoProd;
+    private javax.swing.JTextField jTextFieldIdClinete;
     private javax.swing.JTextField jTextFieldNumVenda;
     private javax.swing.JTextField jTextFieldTotalVenda;
     private javax.swing.JTextField jTextFieldprecoUnit;

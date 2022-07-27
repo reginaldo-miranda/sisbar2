@@ -1,5 +1,7 @@
 package model;
 
+import dao.EntidadeBase;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -11,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 
 @Table(name = "venda")
-public class MoPdv {
+public class MoPdv implements EntidadeBase, Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
