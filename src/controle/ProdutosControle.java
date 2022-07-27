@@ -34,6 +34,7 @@ public class ProdutosControle extends DaoGenerico<MoProdutos>{
         return prod;
 
     }
+     
    
    
 }

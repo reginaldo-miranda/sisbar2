@@ -45,12 +45,12 @@
             <Property name="text" type="java.lang.String" value="Vendas"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemPDV">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemPdv">
               <Properties>
-                <Property name="text" type="java.lang.String" value="PDV"/>
+                <Property name="text" type="java.lang.String" value="Pdv"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemPDVActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemPdvActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
