@@ -6,6 +6,7 @@
     <class>model.MoProdutos</class>
     <class>model.MoGrupo</class>
     <class>model.MoPdv</class>
+    <class>model.MoPdvItens</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sisbar?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

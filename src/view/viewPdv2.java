@@ -4,7 +4,9 @@
  */
 package view;
 
+import controle.ClientesControle;
 import controle.Pdv2Controle;
+import controle.PdvItensControle;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import static java.time.Instant.now;
@@ -13,7 +15,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import model.MoPdv;
+import model.MoPdvItens;
 import static model.MoPdv_.id;
 import model.MoProdutos;
 
@@ -25,6 +29,11 @@ public class viewPdv2 extends javax.swing.JFrame {
 
     Pdv2Controle controle = new Pdv2Controle();
     MoPdv mopdv = new MoPdv();
+
+    PdvItensControle pdvitensctr = new PdvItensControle();
+    MoPdvItens mopdvitens = new MoPdvItens();
+
+    ClientesControle clicontrole = new ClientesControle();
 
     private String receber, receberCli = null;
     private Integer id_prod, receb_id_cliente, receberVenda;
@@ -39,6 +48,15 @@ public class viewPdv2 extends javax.swing.JFrame {
         initComponents();
     }
 
+    
+     public void carregaVendaItens() {
+
+        DefaultTableModel modelo = (DefaultTableModel) getjTableVendaPdv().getModel();
+        for (MoProdutos prod : controle.carregaProd()) {
+
+            modelo.addRow(new Object[]{prod.getId(), prod.getDescricao(), prod.getUnid_medida(),prod.getPreco_venda()});
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,7 +76,7 @@ public class viewPdv2 extends javax.swing.JFrame {
         jButtonBuscaCli = new javax.swing.JButton();
         jTextFieldTotalVenda = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableVendaPdv = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jTextFieldCodigoProd = new javax.swing.JTextField();
         jTextFieldDescricaoProd = new javax.swing.JTextField();
@@ -67,6 +85,9 @@ public class viewPdv2 extends javax.swing.JFrame {
         jTextFieldprecoUnit = new javax.swing.JTextField();
         jButtonBuscarProduto = new javax.swing.JButton();
         jButtonNovoCupom = new javax.swing.JButton();
+        jButtonGravarItens = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jTextFieldQde = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,7 +111,7 @@ public class viewPdv2 extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableVendaPdv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -98,7 +119,7 @@ public class viewPdv2 extends javax.swing.JFrame {
                 "Codigo", "Descricao", "Qde", "Preco"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableVendaPdv);
 
         jLabel4.setText("Codigo");
 
@@ -119,6 +140,15 @@ public class viewPdv2 extends javax.swing.JFrame {
                 jButtonNovoCupomActionPerformed(evt);
             }
         });
+
+        jButtonGravarItens.setText("Gravar");
+        jButtonGravarItens.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGravarItensActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Qde");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -152,26 +182,31 @@ public class viewPdv2 extends javax.swing.JFrame {
                         .addComponent(jTextFieldTotalVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 268, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldCodigoProd, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(58, 58, 58)
+                                .addComponent(jLabel5)
+                                .addGap(185, 185, 185)
+                                .addComponent(jLabel6))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jTextFieldQde, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldDescricaoProd, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldprecoUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonBuscarProduto)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonGravarItens)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldCodigoProd, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(189, 189, 189)
-                        .addComponent(jLabel6))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextFieldDescricaoProd, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldprecoUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonBuscarProduto)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,13 +237,16 @@ public class viewPdv2 extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldCodigoProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldDescricaoProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldprecoUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonBuscarProduto))
+                    .addComponent(jButtonBuscarProduto)
+                    .addComponent(jButtonGravarItens)
+                    .addComponent(jTextFieldQde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(83, 83, 83))
         );
 
@@ -246,11 +284,10 @@ public class viewPdv2 extends javax.swing.JFrame {
     private void jButtonNovoCupomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoCupomActionPerformed
 
         //  mopdv.setId_clientes(Integer.parseInt(jTextFieldCliente.getText()));
-               
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat();
-         mopdv.setData(c);
-        
+        mopdv.setData(c);
+
         try {
             mopdv = controle.salvar(mopdv);
             List<MoPdv> vpdv = controle.ConsultarVendaPId(mopdv.getId());
@@ -263,6 +300,21 @@ public class viewPdv2 extends javax.swing.JFrame {
             Logger.getLogger(viewPdv2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonNovoCupomActionPerformed
+
+    private void jButtonGravarItensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGravarItensActionPerformed
+        mopdvitens.setProdutos(Integer.parseInt(jTextFieldCodigoProd.getText()));
+        mopdvitens.setQuantidade(Double.parseDouble(jTextFieldQde.getText()));
+        mopdvitens.setValorUnitario(Double.parseDouble(jTextFieldQde.getText()));
+        mopdvitens.setVenda(Integer.parseInt(jTextFieldNumVenda.getText()));
+
+        try {
+            pdvitensctr.salvar(mopdvitens);
+        } catch (Exception ex) {
+            Logger.getLogger(viewPdv2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_jButtonGravarItensActionPerformed
 
     /**
      * @param args the command line arguments
@@ -298,10 +350,12 @@ public class viewPdv2 extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBuscaCli;
     private javax.swing.JButton jButtonBuscarProduto;
+    private javax.swing.JButton jButtonGravarItens;
     private javax.swing.JButton jButtonNovoCupom;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JLabel jLabel1;
@@ -310,14 +364,30 @@ public class viewPdv2 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableVendaPdv;
     private javax.swing.JTextField jTextFieldCliente;
     private javax.swing.JTextField jTextFieldCodigoProd;
     private javax.swing.JTextField jTextFieldDescricaoProd;
     private javax.swing.JTextField jTextFieldIdClinete;
     private javax.swing.JTextField jTextFieldNumVenda;
+    private javax.swing.JTextField jTextFieldQde;
     private javax.swing.JTextField jTextFieldTotalVenda;
     private javax.swing.JTextField jTextFieldprecoUnit;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the jTableVendaPdv
+     */
+    public javax.swing.JTable getjTableVendaPdv() {
+        return jTableVendaPdv;
+    }
+
+    /**
+     * @param jTableVendaPdv the jTableVendaPdv to set
+     */
+    public void setjTableVendaPdv(javax.swing.JTable jTableVendaPdv) {
+        this.jTableVendaPdv = jTableVendaPdv;
+    }
 }
