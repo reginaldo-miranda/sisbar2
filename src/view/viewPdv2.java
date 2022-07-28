@@ -10,9 +10,12 @@ import java.text.SimpleDateFormat;
 import static java.time.Instant.now;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.MoPdv;
+import static model.MoPdv_.id;
+import model.MoProdutos;
 
 /**
  *
@@ -26,6 +29,7 @@ public class viewPdv2 extends javax.swing.JFrame {
     private String receber, receberCli = null;
     private Integer id_prod, receb_id_cliente, receberVenda;
 
+    Integer numVenda = 0;
     private String receberDescProd, receberPreco, recebeIdProd, receberIdSelecionado;
 
     /**
@@ -241,16 +245,20 @@ public class viewPdv2 extends javax.swing.JFrame {
 
     private void jButtonNovoCupomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoCupomActionPerformed
 
-        mopdv.setId_clientes(Integer.parseInt(jTextFieldCliente.getText()));
-        
-        /*
-        DateFormat dateformat = new SimpleDateFormat("dd/MM/yyy");
+        //  mopdv.setId_clientes(Integer.parseInt(jTextFieldCliente.getText()));
+               
         Calendar c = Calendar.getInstance();
-      
-        // mopdv.setData(c.getTime());
-        */
+        SimpleDateFormat df = new SimpleDateFormat();
+         mopdv.setData(c);
+        
         try {
-            controle.salvar(mopdv);
+            mopdv = controle.salvar(mopdv);
+            List<MoPdv> vpdv = controle.ConsultarVendaPId(mopdv.getId());
+            for (MoPdv p : vpdv) {
+                numVenda = p.getId();
+            }
+            jTextFieldNumVenda.setText(Integer.toString(numVenda));
+
         } catch (Exception ex) {
             Logger.getLogger(viewPdv2.class.getName()).log(Level.SEVERE, null, ex);
         }

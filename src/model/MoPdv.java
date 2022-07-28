@@ -8,9 +8,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
+
+
+@NamedQueries({
+        
+    @NamedQuery(name = "MoPdv.todos", query = "SELECT pd FROM MoPdv pd"),
+            
+    @NamedQuery(name = "MoPdv.id", query = "SELECT pd FROM MoPdv pd where pd.id = :idpd")
+})
 
 @Table(name = "venda")
 public class MoPdv implements EntidadeBase, Serializable{
