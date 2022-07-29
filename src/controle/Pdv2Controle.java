@@ -33,5 +33,15 @@ public class Pdv2Controle extends DaoGenerico<MoPdv> {
         return vpdv;
 
     }
+     
+      public java.util.List<MoPdv> ConsultarVendaTodas() {
+
+        EntityManager em = getEM();
+
+        TypedQuery<MoPdv> consulta = (TypedQuery<MoPdv>) em.createNamedQuery("MoPdv.todos", MoPdv.class);
+        List<MoPdv> vpdv = consulta.getResultList();
+        return vpdv;
+
+    }
     
 }

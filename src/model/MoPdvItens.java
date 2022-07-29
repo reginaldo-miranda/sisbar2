@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -18,6 +20,15 @@ import javax.persistence.Table;
  * @author suporte11-pc
  */
 @Entity
+@NamedQueries({
+        
+    @NamedQuery(name = "MoVendaItens.todos", query = "SELECT vit FROM MoPdvItens vit"),
+            
+    @NamedQuery(name = "MoVendaItens.id", query = "SELECT vi FROM MoPdvItens vi where vi.id = :idvi")
+})
+
+
+
 @Table(name="vendaitens")
 public class MoPdvItens implements EntidadeBase, Serializable {
 
