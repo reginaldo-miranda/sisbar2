@@ -14,16 +14,14 @@ import javax.persistence.Table;
 
 @Entity
 
-
 @NamedQueries({
-        
     @NamedQuery(name = "MoPdv.todos", query = "SELECT pd FROM MoPdv pd"),
-            
+
     @NamedQuery(name = "MoPdv.id", query = "SELECT pd FROM MoPdv pd where pd.id = :idpd")
 })
 
 @Table(name = "venda")
-public class MoPdv implements EntidadeBase, Serializable{
+public class MoPdv implements EntidadeBase, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +29,7 @@ public class MoPdv implements EntidadeBase, Serializable{
     private Calendar data;
     private Double valorTotal;
     private Integer parcelas;
-    private String clientes;
+   /// private String clientes;
     private Integer id_clientes;
 
     public MoPdv() {
@@ -68,7 +66,7 @@ public class MoPdv implements EntidadeBase, Serializable{
     public void setParcelas(Integer parcelas) {
         this.parcelas = parcelas;
     }
-
+/*
     public String getClientes() {
         return clientes;
     }
@@ -76,7 +74,7 @@ public class MoPdv implements EntidadeBase, Serializable{
     public void setClientes(String clientes) {
         this.clientes = clientes;
     }
-
+*/
     public Integer getId_clientes() {
         return id_clientes;
     }

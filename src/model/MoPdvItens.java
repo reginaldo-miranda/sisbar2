@@ -24,7 +24,7 @@ import javax.persistence.Table;
         
     @NamedQuery(name = "MoVendaItens.todos", query = "SELECT vit FROM MoPdvItens vit"),
             
-    @NamedQuery(name = "MoVendaItens.id", query = "SELECT vi FROM MoPdvItens vi where vi.id = :idvi")
+    @NamedQuery(name = "MoVendaItens.id", query = "SELECT vi FROM MoPdvItens vi where vi.venda = :idvi")
 })
 
 

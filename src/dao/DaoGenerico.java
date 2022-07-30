@@ -59,5 +59,17 @@ public class DaoGenerico<T extends EntidadeBase> {
            
        }
        
-            
+          public T salvarItensVenda(T t) throws Exception{
+           EntityManager em = getEM();
+           try {
+               em.getTransaction().begin();
+               
+                   em.persist(t);
+               
+               em.getTransaction().commit();
+           } finally {
+               em.close();
+           }
+           return t;
+       }       
 }

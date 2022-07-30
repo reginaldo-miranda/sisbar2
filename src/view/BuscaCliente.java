@@ -12,7 +12,8 @@ import model.MoClientes;
 public class BuscaCliente extends javax.swing.JDialog {
 
     ClientesControle controle = new ClientesControle();
-    private String clienteSelecionado;
+    
+    private String NomeclieSelecionado;
     private Integer id_cli_selecionado;
 
     public BuscaCliente(java.awt.Frame parent, boolean modal) {
@@ -115,9 +116,9 @@ public class BuscaCliente extends javax.swing.JDialog {
         } else {
 
             // setSelecionado(true);
-            setClienteSelecionado(getjTableViewBuscaCli().getValueAt(linha, 1).toString());
+           // setId_cli_selecionado(getjTableViewBuscaCli().getValueAt(linha, 1).toString());
             setId_cli_selecionado(Integer.parseInt(getjTableViewBuscaCli().getValueAt(linha, 0).toString()));
-          //  setClienteSelecionado(getjTableViewBuscaCli().getValueAt(linha, 2).toString());
+            setNomeclieSelecionado(getjTableViewBuscaCli().getValueAt(linha, 1).toString());
             this.dispose();
 
         }
@@ -174,31 +175,17 @@ public class BuscaCliente extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     /**
-     * @return the jTableViewBuscaCli
+     * @return the NomeclieSelecionado
      */
-    public javax.swing.JTable getjTableViewBuscaCli() {
-        return jTableViewBuscaCli;
+    public String getNomeclieSelecionado() {
+        return NomeclieSelecionado;
     }
 
     /**
-     * @param jTableViewBuscaCli the jTableViewBuscaCli to set
+     * @param NomeclieSelecionado the NomeclieSelecionado to set
      */
-    public void setjTableViewBuscaCli(javax.swing.JTable jTableViewBuscaCli) {
-        this.jTableViewBuscaCli = jTableViewBuscaCli;
-    }
-
-    /**
-     * @return the clienteSelecionado
-     */
-    public String getClienteSelecionado() {
-        return clienteSelecionado;
-    }
-
-    /**
-     * @param clienteSelecionado the clienteSelecionado to set
-     */
-    public void setClienteSelecionado(String clienteSelecionado) {
-        this.clienteSelecionado = clienteSelecionado;
+    public void setNomeclieSelecionado(String NomeclieSelecionado) {
+        this.NomeclieSelecionado = NomeclieSelecionado;
     }
 
     /**
@@ -215,4 +202,19 @@ public class BuscaCliente extends javax.swing.JDialog {
         this.id_cli_selecionado = id_cli_selecionado;
     }
 
+    /**
+     * @return the jTableViewBuscaCli
+     */
+    public javax.swing.JTable getjTableViewBuscaCli() {
+        return jTableViewBuscaCli;
+    }
+
+    /**
+     * @param jTableViewBuscaCli the jTableViewBuscaCli to set
+     */
+    public void setjTableViewBuscaCli(javax.swing.JTable jTableViewBuscaCli) {
+        this.jTableViewBuscaCli = jTableViewBuscaCli;
+    }
+
+   
 }

@@ -42,7 +42,7 @@ public class BuscarVenda extends javax.swing.JDialog {
         DefaultTableModel modelo = (DefaultTableModel) getjTableBuscarVenda().getModel();
         for (MoPdv mopdv : controle.ConsultarVendaTodas()) {
 
-            modelo.addRow(new Object[]{mopdv.getId(), mopdv.getData(), mopdv.getClientes() ,mopdv.getValorTotal()});
+            modelo.addRow(new Object[]{mopdv.getId(), mopdv.getData(), mopdv.getId_clientes() ,mopdv.getValorTotal()});
         }
     }
 
@@ -131,7 +131,7 @@ public class BuscarVenda extends javax.swing.JDialog {
 
             setCodigoSelecionado(Integer.parseInt(getjTableBuscarVenda().getValueAt(linha, 0).toString()));
            // setDataselecionada(getjTableBuscarVenda().getValueAt(linha, 1).toString());
-           // setClienteSelecionado(Integer.parseInt(getjTableBuscarVenda().getValueAt(linha, 2).toString()));
+          // setClienteSelecionado(Integer.parseInt(getjTableBuscarVenda().getValueAt(linha, 2).toString()));
            // setClienteSelecionado(Integer.parseInt(getjTableBuscarVenda().getValueAt(linha, 3).toString()));
 
             this.dispose();

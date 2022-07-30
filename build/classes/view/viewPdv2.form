@@ -44,7 +44,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jTextFieldCliente" min="-2" pref="202" max="-2" attributes="0"/>
+                                      <Component id="jTextFieldNomeCliente" min="-2" pref="202" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="jButtonBuscaCli" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -120,7 +120,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jTextFieldIdClinete" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldCliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextFieldNomeCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButtonBuscaCli" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -172,7 +172,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldIdClinete">
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextFieldCliente">
+    <Component class="javax.swing.JTextField" name="jTextFieldNomeCliente">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
