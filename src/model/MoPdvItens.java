@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -39,9 +41,20 @@ public class MoPdvItens implements EntidadeBase, Serializable {
     private Double quantidade;
     private Double valorUnitario;
     private Double valorTotal;
-    private int venda;
+    @ManyToOne
+    @JoinColumn(name="venda", referencedColumnName = "id")
+    private MoPdv venda;
+    //private int venda;
+    
+    
+    @ManyToOne
+    @JoinColumn(name = "produto", referencedColumnName = "id")
+    private MoProdutos produto;
+    
     private int produtos;
 
+    
+    
     /**
      * @return the id
      */
@@ -98,19 +111,8 @@ public class MoPdvItens implements EntidadeBase, Serializable {
         this.valorTotal = valorTotal;
     }
 
-    /**
-     * @return the venda
-     */
-    public int getVenda() {
-        return venda;
-    }
 
-    /**
-     * @param venda the venda to set
-     */
-    public void setVenda(int venda) {
-        this.venda = venda;
-    }
+    
 
     /**
      * @return the produtos
@@ -125,6 +127,22 @@ public class MoPdvItens implements EntidadeBase, Serializable {
     public void setProdutos(int produtos) {
         this.produtos = produtos;
     }
+    
+    /**
+     * @return the produto
+     */
+    public MoProdutos getProduto() {
+        return produto;
+    }
+
+    /**
+     * @param produto the produto to set
+     */
+    public void setProduto(MoProdutos produto) {
+        this.produto = produto;
+    }
+    
+    
 
     @Override
     public int hashCode() {
@@ -147,5 +165,20 @@ public class MoPdvItens implements EntidadeBase, Serializable {
         final MoPdvItens other = (MoPdvItens) obj;
         return Objects.equals(this.id, other.id);
     }
+
+    /**
+     * @return the venda
+     */
+    public MoPdv getVenda() {
+        return venda;
+    }
+
+    /**
+     * @param venda the venda to set
+     */
+    public void setVenda(MoPdv venda) {
+        this.venda = venda;
+    }
+
 
 }

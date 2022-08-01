@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.MoPdv;
 import model.MoPdvItens;
@@ -58,12 +59,21 @@ public class viewPdv2 extends javax.swing.JFrame {
         }
     }
 
+    public void carregarTabela() {
+        DefaultTableModel modelo = (DefaultTableModel) getjTableVendaPdv().getModel();
+        // modelo.setRowCount(0);
+        modelo.addRow(new Object[]{
+            jTextFieldCodigoProd.getText(), jTextFieldDescricaoProd.getText(),
+            jTextFieldQde.getText(), jTextFieldprecoUnit.getText()});
+
+    }
+
     public void salvarItens() {
 
         mopdvitens.setProdutos(Integer.parseInt(jTextFieldCodigoProd.getText()));
         mopdvitens.setQuantidade(Double.parseDouble(jTextFieldQde.getText()));
         mopdvitens.setValorUnitario(Double.parseDouble(jTextFieldQde.getText()));
-        mopdvitens.setVenda(Integer.parseInt(jTextFieldNumVenda.getText()));
+        //   mopdvitens.setVenda(Integer.parseInt(jTextFieldNumVenda.getText()));
 
         try {
             pdvitensctr.salvarItensVenda(mopdvitens);
@@ -111,6 +121,7 @@ public class viewPdv2 extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jTextFieldQde = new javax.swing.JTextField();
         jButtonBuscarVenda = new javax.swing.JButton();
+        jButtonGrade = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -180,64 +191,75 @@ public class viewPdv2 extends javax.swing.JFrame {
             }
         });
 
+        jButtonGrade.setText("Gr Grade");
+        jButtonGrade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGradeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonBuscarVenda)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonSair))
-                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldIdClinete))
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
+                                .addComponent(jButtonBuscarVenda)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonSair))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jTextFieldIdClinete))
                                         .addGap(18, 18, 18)
-                                        .addComponent(jButtonBuscaCli))))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jButtonBuscaCli))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jTextFieldNumVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButtonNovoCupom)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jTextFieldTotalVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextFieldNumVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonNovoCupom)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextFieldTotalVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 268, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldCodigoProd, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addGap(58, 58, 58)
+                                        .addComponent(jLabel5)
+                                        .addGap(185, 185, 185)
+                                        .addComponent(jLabel6))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jTextFieldQde, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextFieldDescricaoProd, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextFieldprecoUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButtonBuscarProduto)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonGravarItens)))
+                                .addGap(0, 115, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldCodigoProd, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(58, 58, 58)
-                                .addComponent(jLabel5)
-                                .addGap(185, 185, 185)
-                                .addComponent(jLabel6))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextFieldQde, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldDescricaoProd, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldprecoUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonBuscarProduto)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonGravarItens)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(6, 6, 6)
+                        .addComponent(jButtonGrade)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -264,9 +286,15 @@ public class viewPdv2 extends javax.swing.JFrame {
                             .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonBuscaCli)))
                     .addComponent(jTextFieldTotalVenda))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonGrade)
+                        .addGap(51, 51, 51)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
@@ -318,10 +346,10 @@ public class viewPdv2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBuscarProdutoActionPerformed
 
     private void jButtonNovoCupomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoCupomActionPerformed
-        Calendar c = Calendar.getInstance();
+        // Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat();
-        mopdv.setData(c);
-        mopdv.setId_clientes(Integer.parseInt(jTextFieldIdClinete.getText().toString()));
+        mopdv.setData(Calendar.getInstance());
+        // mopdv.setId_clientes(Integer.parseInt(jTextFieldIdClinete.getText().toString()));
 
         try {
             mopdv = controle.salvar(mopdv);
@@ -339,7 +367,7 @@ public class viewPdv2 extends javax.swing.JFrame {
     private void jButtonGravarItensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGravarItensActionPerformed
 
         salvarItens();
-     
+
     }//GEN-LAST:event_jButtonGravarItensActionPerformed
 
     private void jButtonBuscarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarVendaActionPerformed
@@ -352,6 +380,20 @@ public class viewPdv2 extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jButtonBuscarVendaActionPerformed
+
+    private void jButtonGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGradeActionPerformed
+        if (jTextFieldQde.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Campo qde obrigatorio");
+            jTextFieldQde.requestFocus();
+        } else {
+            carregarTabela();
+            jTextFieldCodigoProd.setText("");
+            jTextFieldQde.setText(" ");
+            jTextFieldDescricaoProd.setText("");
+            jTextFieldprecoUnit.setText("");
+        }
+
+    }//GEN-LAST:event_jButtonGradeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -393,6 +435,7 @@ public class viewPdv2 extends javax.swing.JFrame {
     private javax.swing.JButton jButtonBuscaCli;
     private javax.swing.JButton jButtonBuscarProduto;
     private javax.swing.JButton jButtonBuscarVenda;
+    private javax.swing.JButton jButtonGrade;
     private javax.swing.JButton jButtonGravarItens;
     private javax.swing.JButton jButtonNovoCupom;
     private javax.swing.JButton jButtonSair;
