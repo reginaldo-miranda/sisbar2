@@ -10,6 +10,7 @@ import controle.PdvItensControle;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import static java.time.Instant.now;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +43,8 @@ public class viewPdv2 extends javax.swing.JFrame {
     Integer recebeVendaSelecionada, numVenda = 0;
     private String receberDescProd, receberPreco, recebeIdProd, receberIdSelecionado;
 
+    Double qde;
+
     /**
      * Creates new form viewPdv2
      */
@@ -54,7 +57,7 @@ public class viewPdv2 extends javax.swing.JFrame {
 
         DefaultTableModel modelo = (DefaultTableModel) getjTableVendaPdv().getModel();
         modelo.setRowCount(0);
-        for (MoPdvItens venditens : pdvitensctr.carregaVendaId(recebeVendaSelecionada)) {
+        for (MoPdvItens venditens : pdvitensctr.carregaVendaId(numVenda)) {
             modelo.addRow(new Object[]{venditens.getId(), venditens.getProdutos(), venditens.getQuantidade(), venditens.getValorUnitario()});
         }
     }
@@ -87,6 +90,43 @@ public class viewPdv2 extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(viewPdv2.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void salvarVendaEItens() {
+        try {
+            mopdv = controle.salvar(mopdv);
+            List<MoPdv> vpdv = controle.ConsultarVendaPId(mopdv.getId());
+            for (MoPdv p : vpdv) {
+                numVenda = p.getId();
+            }
+            jTextFieldNumVenda.setText(Integer.toString(numVenda));
+
+        } catch (Exception ex) {
+            Logger.getLogger(viewPdv2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void pegarDadosTabela() throws Exception {
+        DefaultTableModel modelo = (DefaultTableModel) getjTableVendaPdv().getModel();
+        if (modelo.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "tabela vazia");
+        } else {
+            for (int i = 0; i < modelo.getRowCount(); i++) {
+                //   mopdvitens.setProduto((MoProdutos) modelo.getValueAt(i, 0));
+                qde = Double.parseDouble((String) modelo.getValueAt(i, 0));
+                mopdvitens.setQuantidade(qde);
+                mopdvitens.setVenda(mopdv);
+                pdvitensctr.salvarItensVenda(mopdvitens);
+                //     mopdvitens.setValorUnitario((Double) modelo.getValueAt(i, 3));
+               // mopdv = controle.salvar(mopdv);
+            }
+
+        }
+
+        /*  List<MoPdvItens> mod = (List<MoPdvItens>) modelo;
+        for (MoPdvItens mo : mod) {
+            System.out.println("view.viewPdv2.pegarDadosTabela()" + mo.getProduto());
+        } */
     }
 
     /**
@@ -122,6 +162,7 @@ public class viewPdv2 extends javax.swing.JFrame {
         jTextFieldQde = new javax.swing.JTextField();
         jButtonBuscarVenda = new javax.swing.JButton();
         jButtonGrade = new javax.swing.JButton();
+        jButtonConcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -198,6 +239,13 @@ public class viewPdv2 extends javax.swing.JFrame {
             }
         });
 
+        jButtonConcluir.setText("Concluir");
+        jButtonConcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -253,8 +301,10 @@ public class viewPdv2 extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(jButtonBuscarProduto)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButtonGravarItens)))
-                                .addGap(0, 115, Short.MAX_VALUE))))
+                                        .addComponent(jButtonGravarItens)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonConcluir)))
+                                .addGap(0, 31, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jButtonGrade)
@@ -307,7 +357,8 @@ public class viewPdv2 extends javax.swing.JFrame {
                     .addComponent(jTextFieldprecoUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonBuscarProduto)
                     .addComponent(jButtonGravarItens)
-                    .addComponent(jTextFieldQde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldQde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonConcluir))
                 .addGap(83, 83, 83))
         );
 
@@ -347,7 +398,7 @@ public class viewPdv2 extends javax.swing.JFrame {
 
     private void jButtonNovoCupomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoCupomActionPerformed
         // Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat();
+        // SimpleDateFormat df = new SimpleDateFormat();
         mopdv.setData(Calendar.getInstance());
         // mopdv.setId_clientes(Integer.parseInt(jTextFieldIdClinete.getText().toString()));
 
@@ -375,6 +426,7 @@ public class viewPdv2 extends javax.swing.JFrame {
         BuscarVenda dialog = new BuscarVenda(new javax.swing.JFrame(), true);
         dialog.setVisible(true);
         recebeVendaSelecionada = dialog.getCodigoSelecionado();
+        numVenda = recebeVendaSelecionada;
         jTextFieldNumVenda.setText(Integer.toString(recebeVendaSelecionada));
         carregaVendaItens();
 
@@ -382,8 +434,8 @@ public class viewPdv2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBuscarVendaActionPerformed
 
     private void jButtonGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGradeActionPerformed
-        if (jTextFieldQde.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Campo qde obrigatorio");
+        if (jTextFieldQde.getText().equals("") || jTextFieldIdClinete.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Campo Cliente e qde obrigatorio");
             jTextFieldQde.requestFocus();
         } else {
             carregarTabela();
@@ -394,6 +446,16 @@ public class viewPdv2 extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButtonGradeActionPerformed
+
+    private void jButtonConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConcluirActionPerformed
+        JOptionPane.showMessageDialog(null, "aqui");
+        try {
+            pegarDadosTabela();
+            //  salvarVendaEItens();
+        } catch (Exception ex) {
+            Logger.getLogger(viewPdv2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonConcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -435,6 +497,7 @@ public class viewPdv2 extends javax.swing.JFrame {
     private javax.swing.JButton jButtonBuscaCli;
     private javax.swing.JButton jButtonBuscarProduto;
     private javax.swing.JButton jButtonBuscarVenda;
+    private javax.swing.JButton jButtonConcluir;
     private javax.swing.JButton jButtonGrade;
     private javax.swing.JButton jButtonGravarItens;
     private javax.swing.JButton jButtonNovoCupom;

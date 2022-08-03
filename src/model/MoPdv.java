@@ -38,7 +38,7 @@ public class MoPdv implements EntidadeBase, Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data")
     private Calendar data;
 

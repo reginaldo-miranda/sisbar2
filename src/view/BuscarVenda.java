@@ -45,7 +45,7 @@ public class BuscarVenda extends javax.swing.JDialog {
             modelo.addRow(new Object[]{mopdv.getId(), mopdv.getData(), mopdv.getId_clientes() ,mopdv.getValorTotal()});
         }
     }
-
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
