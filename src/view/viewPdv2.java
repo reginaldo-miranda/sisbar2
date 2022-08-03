@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.MoPdv;
 import model.MoPdvItens;
+import static model.MoPdvItens_.produto;
 //import static model.MoPdv_.id;
 import model.MoProdutos;
 
@@ -44,6 +45,7 @@ public class viewPdv2 extends javax.swing.JFrame {
     private String receberDescProd, receberPreco, recebeIdProd, receberIdSelecionado;
 
     Double qde;
+    Integer idprod;
 
     /**
      * Creates new form viewPdv2
@@ -66,8 +68,10 @@ public class viewPdv2 extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel) getjTableVendaPdv().getModel();
         // modelo.setRowCount(0);
         modelo.addRow(new Object[]{
-            jTextFieldCodigoProd.getText(), jTextFieldDescricaoProd.getText(),
-            jTextFieldQde.getText(), jTextFieldprecoUnit.getText()});
+            jTextFieldCodigoProd.getText(),
+            jTextFieldDescricaoProd.getText(),
+            jTextFieldQde.getText(),
+            jTextFieldprecoUnit.getText()});
 
     }
 
@@ -112,15 +116,19 @@ public class viewPdv2 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "tabela vazia");
         } else {
             for (int i = 0; i < modelo.getRowCount(); i++) {
-                //   mopdvitens.setProduto((MoProdutos) modelo.getValueAt(i, 0));
-                qde = Double.parseDouble((String) modelo.getValueAt(i, 0));
+                //mopdvitens.setProduto((MoProdutos) modelo.getValueAt(i, 0)); */
+                qde = Double.parseDouble((String) modelo.getValueAt(i, 2));
+
+             //   mopdvitens.setProduto(id_prod);
                 mopdvitens.setQuantidade(qde);
                 mopdvitens.setVenda(mopdv);
                 pdvitensctr.salvarItensVenda(mopdvitens);
                 //     mopdvitens.setValorUnitario((Double) modelo.getValueAt(i, 3));
-               // mopdv = controle.salvar(mopdv);
+                // mopdv = controle.salvar(mopdv);
+                mopdv.adicionarItens(mopdvitens);
             }
-
+            mopdv.setId_clientes(receb_id_cliente);
+            mopdv = controle.salvar(mopdv);
         }
 
         /*  List<MoPdvItens> mod = (List<MoPdvItens>) modelo;
@@ -400,8 +408,8 @@ public class viewPdv2 extends javax.swing.JFrame {
         // Calendar c = Calendar.getInstance();
         // SimpleDateFormat df = new SimpleDateFormat();
         mopdv.setData(Calendar.getInstance());
-        // mopdv.setId_clientes(Integer.parseInt(jTextFieldIdClinete.getText().toString()));
 
+        // mopdv.setId_clientes(Integer.parseInt(jTextFieldIdClinete.getText().toString()));
         try {
             mopdv = controle.salvar(mopdv);
             List<MoPdv> vpdv = controle.ConsultarVendaPId(mopdv.getId());
