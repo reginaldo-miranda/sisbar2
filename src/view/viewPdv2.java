@@ -37,6 +37,8 @@ public class viewPdv2 extends javax.swing.JFrame {
     MoPdvItens mopdvitens = new MoPdvItens();
 
     ClientesControle clicontrole = new ClientesControle();
+    
+    MoProdutos moproduto = new MoProdutos();
 
     private String receber, receberNomeCli = null;
     private Integer id_prod, receb_id_cliente, receberVenda;
@@ -45,6 +47,7 @@ public class viewPdv2 extends javax.swing.JFrame {
     private String receberDescProd, receberPreco, recebeIdProd, receberIdSelecionado;
 
     Double qde;
+    Double precoUnit;
     Integer idprod;
 
     /**
@@ -80,6 +83,9 @@ public class viewPdv2 extends javax.swing.JFrame {
         mopdvitens.setProdutos(Integer.parseInt(jTextFieldCodigoProd.getText()));
         mopdvitens.setQuantidade(Double.parseDouble(jTextFieldQde.getText()));
         mopdvitens.setValorUnitario(Double.parseDouble(jTextFieldQde.getText()));
+        
+        mopdvitens.setValorTotal(qde);
+        
         //   mopdvitens.setVenda(Integer.parseInt(jTextFieldNumVenda.getText()));
 
         try {
@@ -116,14 +122,18 @@ public class viewPdv2 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "tabela vazia");
         } else {
             for (int i = 0; i < modelo.getRowCount(); i++) {
-                //mopdvitens.setProduto((MoProdutos) modelo.getValueAt(i, 0)); */
+                id_prod =  Integer.parseInt(modelo.getValueAt(i, 0).toString()); 
                 qde = Double.parseDouble((String) modelo.getValueAt(i, 2));
-
-             //   mopdvitens.setProduto(id_prod);
+                precoUnit = Double.parseDouble((String) modelo.getValueAt(i, 3));
+                
+                
+                
+             //   mopdvitens.setProduto(id_prod).toString();
+                mopdvitens.setProdutos(id_prod);
                 mopdvitens.setQuantidade(qde);
                 mopdvitens.setVenda(mopdv);
                 pdvitensctr.salvarItensVenda(mopdvitens);
-                //     mopdvitens.setValorUnitario((Double) modelo.getValueAt(i, 3));
+                mopdvitens.setValorUnitario((precoUnit));
                 // mopdv = controle.salvar(mopdv);
                 mopdv.adicionarItens(mopdvitens);
             }
