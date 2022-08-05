@@ -43,7 +43,7 @@ public class viewPdv2 extends javax.swing.JFrame {
     private String receber, receberNomeCli = null;
     private Integer id_prod, receb_id_cliente, receberVenda;
 
-    Integer recebeVendaSelecionada, numVenda = 0;
+    Integer recebeVendaSelecionada, numVenda = 0, numProd = 0;
     private String receberDescProd, receberPreco, recebeIdProd, receberIdSelecionado;
 
     Double qde;
@@ -63,7 +63,7 @@ public class viewPdv2 extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel) getjTableVendaPdv().getModel();
         modelo.setRowCount(0);
         for (MoPdvItens venditens : pdvitensctr.carregaVendaId(numVenda)) {
-            modelo.addRow(new Object[]{venditens.getId(), venditens.getProdutos(), venditens.getQuantidade(), venditens.getValorUnitario()});
+            modelo.addRow(new Object[]{venditens.getId(), venditens.getProduto(), venditens.getQuantidade(), venditens.getValorUnitario()});
         }
     }
 
@@ -77,10 +77,10 @@ public class viewPdv2 extends javax.swing.JFrame {
             jTextFieldprecoUnit.getText()});
 
     }
-
+/*
     public void salvarItens() {
 
-        mopdvitens.setProdutos(Integer.parseInt(jTextFieldCodigoProd.getText()));
+        mopdvitens.setProduto(Integer.parseInt(jTextFieldCodigoProd.getText()));
         mopdvitens.setQuantidade(Double.parseDouble(jTextFieldQde.getText()));
         mopdvitens.setValorUnitario(Double.parseDouble(jTextFieldQde.getText()));
         
@@ -101,13 +101,14 @@ public class viewPdv2 extends javax.swing.JFrame {
             Logger.getLogger(viewPdv2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+*/
     public void salvarVendaEItens() {
         try {
             mopdv = controle.salvar(mopdv);
             List<MoPdv> vpdv = controle.ConsultarVendaPId(mopdv.getId());
             for (MoPdv p : vpdv) {
                 numVenda = p.getId();
+               
             }
             jTextFieldNumVenda.setText(Integer.toString(numVenda));
 
@@ -117,25 +118,32 @@ public class viewPdv2 extends javax.swing.JFrame {
     }
 
     public void pegarDadosTabela() throws Exception {
+        int linha = getjTableVendaPdv().getSelectedRow();
+        
         DefaultTableModel modelo = (DefaultTableModel) getjTableVendaPdv().getModel();
         if (modelo.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "tabela vazia");
         } else {
             for (int i = 0; i < modelo.getRowCount(); i++) {
+                 
+              
                 id_prod =  Integer.parseInt(modelo.getValueAt(i, 0).toString()); 
+                moproduto.setId(id_prod);
+                
                 qde = Double.parseDouble((String) modelo.getValueAt(i, 2));
                 precoUnit = Double.parseDouble((String) modelo.getValueAt(i, 3));
                 
+                mopdvitens.setProduto(moproduto);
                 
-                
-             //   mopdvitens.setProduto(id_prod).toString();
-                mopdvitens.setProdutos(id_prod);
+              //  mopdvitens.setProduto(id_prod);
                 mopdvitens.setQuantidade(qde);
                 mopdvitens.setVenda(mopdv);
-                pdvitensctr.salvarItensVenda(mopdvitens);
+               
                 mopdvitens.setValorUnitario((precoUnit));
-                // mopdv = controle.salvar(mopdv);
-                mopdv.adicionarItens(mopdvitens);
+                
+                pdvitensctr.salvarItensVenda(mopdvitens);
+              //  mopdv = controle.salvar(mopdv);
+              //  mopdv.adicionarItens(mopdvitens);
             }
             mopdv.setId_clientes(receb_id_cliente);
             mopdv = controle.salvar(mopdv);
@@ -435,7 +443,7 @@ public class viewPdv2 extends javax.swing.JFrame {
 
     private void jButtonGravarItensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGravarItensActionPerformed
 
-        salvarItens();
+       // salvarItens();
 
     }//GEN-LAST:event_jButtonGravarItensActionPerformed
 

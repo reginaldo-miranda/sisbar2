@@ -51,7 +51,7 @@ public class MoPdvItens implements EntidadeBase, Serializable {
     @JoinColumn(name = "produto", referencedColumnName = "id")
     private MoProdutos produto;
     
-    private int produtos;
+   // private int produtos;
 
     
     
@@ -114,20 +114,16 @@ public class MoPdvItens implements EntidadeBase, Serializable {
 
     
 
-    /**
-     * @return the produtos
-     */
+    /*
+   
     public int getProdutos() {
         return produtos;
     }
 
-    /**
-     * @param produtos the produtos to set
-     */
     public void setProdutos(int produtos) {
         this.produtos = produtos;
     }
-    
+    */
     /**
      * @return the produto
      */
@@ -178,6 +174,10 @@ public class MoPdvItens implements EntidadeBase, Serializable {
      */
     public void setVenda(MoPdv venda) {
         this.venda = venda;
+    }
+
+    public void setProduto(Integer id_prod) {
+        this.id = id_prod;       
     }
 
 
