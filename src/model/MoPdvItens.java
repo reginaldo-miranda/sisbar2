@@ -23,15 +23,12 @@ import javax.persistence.Table;
  */
 @Entity
 @NamedQueries({
-        
     @NamedQuery(name = "MoVendaItens.todos", query = "SELECT vit FROM MoPdvItens vit"),
-            
-    @NamedQuery(name = "MoVendaItens.id", query = "SELECT vi FROM MoPdvItens vi where vi.venda = :idvi")
+
+    @NamedQuery(name = "MoVendaItens.id", query = "SELECT vi FROM MoPdvItens vi where vi.id = :idvi")
 })
 
-
-
-@Table(name="vendaitens")
+@Table(name = "vendaitens")
 public class MoPdvItens implements EntidadeBase, Serializable {
 
     @Id
@@ -42,19 +39,14 @@ public class MoPdvItens implements EntidadeBase, Serializable {
     private Double valorUnitario;
     private Double valorTotal;
     @ManyToOne
-    @JoinColumn(name="venda", referencedColumnName = "id")
+    @JoinColumn(name = "venda", referencedColumnName = "id")
     private MoPdv venda;
-    //private int venda;
-    
-    
+
     @ManyToOne
     @JoinColumn(name = "produto", referencedColumnName = "id")
     private MoProdutos produto;
-    
-   // private int produtos;
 
-    
-    
+    // private int produtos;
     /**
      * @return the id
      */
@@ -111,9 +103,6 @@ public class MoPdvItens implements EntidadeBase, Serializable {
         this.valorTotal = valorTotal;
     }
 
-
-    
-
     /*
    
     public int getProdutos() {
@@ -123,7 +112,7 @@ public class MoPdvItens implements EntidadeBase, Serializable {
     public void setProdutos(int produtos) {
         this.produtos = produtos;
     }
-    */
+     */
     /**
      * @return the produto
      */
@@ -137,8 +126,6 @@ public class MoPdvItens implements EntidadeBase, Serializable {
     public void setProduto(MoProdutos produto) {
         this.produto = produto;
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -177,8 +164,7 @@ public class MoPdvItens implements EntidadeBase, Serializable {
     }
 
     public void setProduto(Integer id_prod) {
-        this.id = id_prod;       
+        this.id = id_prod;
     }
-
 
 }

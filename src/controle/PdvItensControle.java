@@ -9,7 +9,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.swing.table.DefaultTableModel;
+import model.MoPdv;
 import model.MoPdvItens;
+import model.MoPdvItens_;
 import model.MoProdutos;
 
 /**
@@ -17,18 +19,20 @@ import model.MoProdutos;
  * @author suporte11-pc
  */
 public class PdvItensControle extends DaoGenerico<MoPdvItens> {
-    
-        public List<MoPdvItens> carregaVendaId(Integer idpr) {
+
+    public List<MoPdvItens> carregaVendaId(Integer idpd) {
 
         EntityManager em = getEM();
 
         TypedQuery<MoPdvItens> consulta = (TypedQuery<MoPdvItens>) em.createNamedQuery("MoVendaItens.id", MoPdvItens.class);
-        consulta.setParameter("idvi", idpr);
+       
+        consulta.setParameter("idvi", idpd);
+       
         List<MoPdvItens> viid = consulta.getResultList();
         return viid;
 
     }
-     
+
     public List<MoPdvItens> carregaVendaItenTd() {
 
         EntityManager em = getEM();
@@ -38,5 +42,5 @@ public class PdvItensControle extends DaoGenerico<MoPdvItens> {
         return viid;
 
     }
-    
+
 }

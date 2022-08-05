@@ -48,9 +48,11 @@ public class MoPdv implements EntidadeBase, Serializable {
     @ManyToOne
     @JoinColumn(name="clientes", referencedColumnName ="id" )
     private MoClientes clientes;
+ 
     
     @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY )
     private List<MoPdvItens> itens = new ArrayList<>();
+    
 
     public MoPdv() {
         this.valorTotal = 0.0;
@@ -60,7 +62,6 @@ public class MoPdv implements EntidadeBase, Serializable {
         obj.setVenda(this);
 //        this.valorTotal  += obj.getValorTotal();
         this.getItens().add(obj);
-        
         
     }
     

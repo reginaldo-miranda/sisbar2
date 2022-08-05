@@ -37,7 +37,7 @@ public class viewPdv2 extends javax.swing.JFrame {
     MoPdvItens mopdvitens = new MoPdvItens();
 
     ClientesControle clicontrole = new ClientesControle();
-    
+
     MoProdutos moproduto = new MoProdutos();
 
     private String receber, receberNomeCli = null;
@@ -60,8 +60,9 @@ public class viewPdv2 extends javax.swing.JFrame {
 
     public void carregaVendaItens() {
 
-        DefaultTableModel modelo = (DefaultTableModel) getjTableVendaPdv().getModel();
+        DefaultTableModel modelo = (DefaultTableModel) jTableVendaPdv.getModel();
         modelo.setRowCount(0);
+
         for (MoPdvItens venditens : pdvitensctr.carregaVendaId(numVenda)) {
             modelo.addRow(new Object[]{venditens.getId(), venditens.getProduto(), venditens.getQuantidade(), venditens.getValorUnitario()});
         }
@@ -77,7 +78,8 @@ public class viewPdv2 extends javax.swing.JFrame {
             jTextFieldprecoUnit.getText()});
 
     }
-/*
+
+    /*
     public void salvarItens() {
 
         mopdvitens.setProduto(Integer.parseInt(jTextFieldCodigoProd.getText()));
@@ -101,14 +103,14 @@ public class viewPdv2 extends javax.swing.JFrame {
             Logger.getLogger(viewPdv2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-*/
+     */
     public void salvarVendaEItens() {
         try {
             mopdv = controle.salvar(mopdv);
             List<MoPdv> vpdv = controle.ConsultarVendaPId(mopdv.getId());
             for (MoPdv p : vpdv) {
                 numVenda = p.getId();
-               
+
             }
             jTextFieldNumVenda.setText(Integer.toString(numVenda));
 
@@ -119,31 +121,28 @@ public class viewPdv2 extends javax.swing.JFrame {
 
     public void pegarDadosTabela() throws Exception {
         int linha = getjTableVendaPdv().getSelectedRow();
-        
+
         DefaultTableModel modelo = (DefaultTableModel) getjTableVendaPdv().getModel();
         if (modelo.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "tabela vazia");
         } else {
             for (int i = 0; i < modelo.getRowCount(); i++) {
-                 
-              
-                id_prod =  Integer.parseInt(modelo.getValueAt(i, 0).toString()); 
+
+                id_prod = Integer.parseInt(modelo.getValueAt(i, 0).toString());
                 moproduto.setId(id_prod);
-                
+
                 qde = Double.parseDouble((String) modelo.getValueAt(i, 2));
                 precoUnit = Double.parseDouble((String) modelo.getValueAt(i, 3));
-                
+
                 mopdvitens.setProduto(moproduto);
-                
-              //  mopdvitens.setProduto(id_prod);
                 mopdvitens.setQuantidade(qde);
                 mopdvitens.setVenda(mopdv);
-               
+
                 mopdvitens.setValorUnitario((precoUnit));
-                
+
                 pdvitensctr.salvarItensVenda(mopdvitens);
-              //  mopdv = controle.salvar(mopdv);
-              //  mopdv.adicionarItens(mopdvitens);
+                //  mopdv = controle.salvar(mopdv);
+                //  mopdv.adicionarItens(mopdvitens);
             }
             mopdv.setId_clientes(receb_id_cliente);
             mopdv = controle.salvar(mopdv);
@@ -425,6 +424,7 @@ public class viewPdv2 extends javax.swing.JFrame {
     private void jButtonNovoCupomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoCupomActionPerformed
         // Calendar c = Calendar.getInstance();
         // SimpleDateFormat df = new SimpleDateFormat();
+
         mopdv.setData(Calendar.getInstance());
 
         // mopdv.setId_clientes(Integer.parseInt(jTextFieldIdClinete.getText().toString()));
@@ -433,6 +433,7 @@ public class viewPdv2 extends javax.swing.JFrame {
             List<MoPdv> vpdv = controle.ConsultarVendaPId(mopdv.getId());
             for (MoPdv p : vpdv) {
                 numVenda = p.getId();
+
             }
             jTextFieldNumVenda.setText(Integer.toString(numVenda));
 
@@ -443,7 +444,7 @@ public class viewPdv2 extends javax.swing.JFrame {
 
     private void jButtonGravarItensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGravarItensActionPerformed
 
-       // salvarItens();
+        // salvarItens();
 
     }//GEN-LAST:event_jButtonGravarItensActionPerformed
 
