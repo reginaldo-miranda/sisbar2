@@ -25,8 +25,13 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "MoVendaItens.todos", query = "SELECT vit FROM MoPdvItens vit"),
 
-    @NamedQuery(name = "MoVendaItens.id", query = "SELECT vi FROM MoPdvItens vi where vi.id = :idvi")
+    @NamedQuery(name = "MoVendaItens.id", query = "SELECT vi FROM MoPdvItens vi where vi.id = :idvi"),
+
+    @NamedQuery(name = "MoVendaItens.ve", query = "SELECT vi FROM MoPdvItens vi where vi.id_venda = :idvi")
+
+//  @NamedQuery(name = "MoVendaItens.ve", query = "SELECT d FROM MoPdvItens e join e.MoPdv e where d.venda = :idvi")    
 })
+// link de site exemplo join   https://www.baeldung.com/jpa-join-types
 
 @Table(name = "vendaitens")
 public class MoPdvItens implements EntidadeBase, Serializable {
@@ -38,6 +43,8 @@ public class MoPdvItens implements EntidadeBase, Serializable {
     private Double quantidade;
     private Double valorUnitario;
     private Double valorTotal;
+    private int id_venda;
+     
     @ManyToOne
     @JoinColumn(name = "venda", referencedColumnName = "id")
     private MoPdv venda;
@@ -165,6 +172,20 @@ public class MoPdvItens implements EntidadeBase, Serializable {
 
     public void setProduto(Integer id_prod) {
         this.id = id_prod;
+    }
+
+    /**
+     * @return the id_venda
+     */
+    public int getId_venda() {
+        return id_venda;
+    }
+
+    /**
+     * @param id_venda the id_venda to set
+     */
+    public void setId_venda(int id_venda) {
+        this.id_venda = id_venda;
     }
 
 }

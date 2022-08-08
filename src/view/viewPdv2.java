@@ -59,13 +59,15 @@ public class viewPdv2 extends javax.swing.JFrame {
     }
 
     public void carregaVendaItens() {
-
+         mopdv.adicionarItens(mopdvitens);
         DefaultTableModel modelo = (DefaultTableModel) jTableVendaPdv.getModel();
         modelo.setRowCount(0);
 
-        for (MoPdvItens venditens : pdvitensctr.carregaVendaId(numVenda)) {
+     //   for (MoPdvItens venditens : pdvitensctr.carregaVendaId(numVenda)) {
+         for (MoPdvItens venditens : pdvitensctr.carregaVendaId(numVenda)) {    
             modelo.addRow(new Object[]{venditens.getId(), venditens.getProduto(), venditens.getQuantidade(), venditens.getValorUnitario()});
-        }
+        }        
+      
     }
 
     public void carregarTabela() {
@@ -137,6 +139,7 @@ public class viewPdv2 extends javax.swing.JFrame {
                 mopdvitens.setProduto(moproduto);
                 mopdvitens.setQuantidade(qde);
                 mopdvitens.setVenda(mopdv);
+                mopdvitens.setId_venda(numVenda);
 
                 mopdvitens.setValorUnitario((precoUnit));
 
@@ -456,6 +459,7 @@ public class viewPdv2 extends javax.swing.JFrame {
         numVenda = recebeVendaSelecionada;
         jTextFieldNumVenda.setText(Integer.toString(recebeVendaSelecionada));
         carregaVendaItens();
+       
 
 
     }//GEN-LAST:event_jButtonBuscarVendaActionPerformed

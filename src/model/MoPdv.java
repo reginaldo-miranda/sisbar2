@@ -48,6 +48,8 @@ public class MoPdv implements EntidadeBase, Serializable {
     @ManyToOne
     @JoinColumn(name="clientes", referencedColumnName ="id" )
     private MoClientes clientes;
+    
+    
  
     
     @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY )
