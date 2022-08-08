@@ -47,7 +47,7 @@ public class viewPdv2 extends javax.swing.JFrame {
     private String receberDescProd, receberPreco, recebeIdProd, receberIdSelecionado;
 
     Double qde;
-    Double precoUnit;
+    Double precoUnit, valortotalVenda;
     Integer idprod;
 
     /**
@@ -73,6 +73,8 @@ public class viewPdv2 extends javax.swing.JFrame {
     public void carregarTabela() {
         DefaultTableModel modelo = (DefaultTableModel) getjTableVendaPdv().getModel();
         // modelo.setRowCount(0);
+        valortotalVenda +=  Double.parseDouble(jTextFieldQde.getText()) * Double.parseDouble(jTextFieldprecoUnit.getText());
+        jTextFieldTotalVenda.setText(valortotalVenda.toString());
         modelo.addRow(new Object[]{
             jTextFieldCodigoProd.getText(),
             jTextFieldDescricaoProd.getText(),
@@ -145,7 +147,7 @@ public class viewPdv2 extends javax.swing.JFrame {
 
                 pdvitensctr.salvarItensVenda(mopdvitens);
                 //  mopdv = controle.salvar(mopdv);
-                //  mopdv.adicionarItens(mopdvitens);
+                 mopdv.adicionarItens(mopdvitens);
             }
             mopdv.setId_clientes(receb_id_cliente);
             mopdv = controle.salvar(mopdv);

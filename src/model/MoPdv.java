@@ -62,7 +62,7 @@ public class MoPdv implements EntidadeBase, Serializable {
     
     public void adicionarItens(MoPdvItens obj){
         obj.setVenda(this);
-//        this.valorTotal  += obj.getValorTotal();
+       // this.valorTotal  += obj.getValorTotal();
         this.getItens().add(obj);
         
     }
