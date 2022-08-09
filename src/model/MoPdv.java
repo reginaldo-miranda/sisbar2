@@ -1,5 +1,6 @@
 package model;
 
+import dao.DaoGenerico;
 import dao.EntidadeBase;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -41,29 +43,31 @@ public class MoPdv implements EntidadeBase, Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data")
     private Calendar data;
-
+  
+//   @Column(name = "VALORTORL")
     private Double valorTotal;
+    
     private Integer parcelas;
     private Integer id_clientes;
+  
     @ManyToOne
     @JoinColumn(name="clientes", referencedColumnName ="id" )
     private MoClientes clientes;
-    
-    
- 
     
     @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY )
     private List<MoPdvItens> itens = new ArrayList<>();
     
 
     public MoPdv() {
-        this.valorTotal = 0.0;
+     //  this.valorTotal = 0.0;
     }
     
     public void adicionarItens(MoPdvItens obj){
         obj.setVenda(this);
-       // this.valorTotal  += obj.getValorTotal();
+       // this.valorTotal /*;
+   //     obj.getValorTotal();
         this.getItens().add(obj);
+        
         
     }
     
@@ -73,7 +77,8 @@ public class MoPdv implements EntidadeBase, Serializable {
         this.getItens().remove(index);
         
     }
-
+    
+ 
     public Integer getId() {
         return id;
     }
@@ -165,5 +170,7 @@ public class MoPdv implements EntidadeBase, Serializable {
     public void setItens(List<MoPdvItens> itens) {
         this.itens = itens;
     }
+
+
 
 }

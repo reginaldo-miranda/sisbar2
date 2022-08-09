@@ -7,6 +7,7 @@ package view;
 import controle.ClientesControle;
 import controle.Pdv2Controle;
 import controle.PdvItensControle;
+import dao.DaoGenerico;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import static java.time.Instant.now;
@@ -16,10 +17,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.MoPdv;
 import model.MoPdvItens;
+import model.MoPdvItens_;
 import static model.MoPdvItens_.produto;
 //import static model.MoPdv_.id;
 import model.MoProdutos;
@@ -47,7 +50,8 @@ public class viewPdv2 extends javax.swing.JFrame {
     private String receberDescProd, receberPreco, recebeIdProd, receberIdSelecionado;
 
     Double qde;
-    Double precoUnit, valortotalVenda;
+    Double precoUnit;
+    private Double valortotalVenda = 0.0, total = 0.0;
     Integer idprod;
 
     /**
@@ -59,22 +63,32 @@ public class viewPdv2 extends javax.swing.JFrame {
     }
 
     public void carregaVendaItens() {
-         mopdv.adicionarItens(mopdvitens);
+
+        // mopdv.adicionarItens(mopdvitens);
         DefaultTableModel modelo = (DefaultTableModel) jTableVendaPdv.getModel();
         modelo.setRowCount(0);
 
-     //   for (MoPdvItens venditens : pdvitensctr.carregaVendaId(numVenda)) {
-         for (MoPdvItens venditens : pdvitensctr.carregaVendaId(numVenda)) {    
+        //   for (MoPdvItens venditens : pdvitensctr.carregaVendaId(numVenda)) {
+        for (MoPdvItens venditens : pdvitensctr.carregaVendaId(numVenda)) {
             modelo.addRow(new Object[]{venditens.getId(), venditens.getProduto(), venditens.getQuantidade(), venditens.getValorUnitario()});
-        }        
-      
+
+        }
+        BuscarVenda buvenda = new BuscarVenda();
+        total = buvenda.getValorSelecionado();
+        
+        if (total == null) {
+            JOptionPane.showMessageDialog(null, "valor zero");
+        } else {
+
+            jTextFieldTotalVenda.setText(total.toString());
+        }
     }
 
     public void carregarTabela() {
         DefaultTableModel modelo = (DefaultTableModel) getjTableVendaPdv().getModel();
         // modelo.setRowCount(0);
-        valortotalVenda +=  Double.parseDouble(jTextFieldQde.getText()) * Double.parseDouble(jTextFieldprecoUnit.getText());
-        jTextFieldTotalVenda.setText(valortotalVenda.toString());
+        setValortotalVenda((Double) getValortotalVenda() + (Double.parseDouble(jTextFieldQde.getText()) * Double.parseDouble(jTextFieldprecoUnit.getText())));
+        jTextFieldTotalVenda.setText(getValortotalVenda().toString());
         modelo.addRow(new Object[]{
             jTextFieldCodigoProd.getText(),
             jTextFieldDescricaoProd.getText(),
@@ -147,8 +161,9 @@ public class viewPdv2 extends javax.swing.JFrame {
 
                 pdvitensctr.salvarItensVenda(mopdvitens);
                 //  mopdv = controle.salvar(mopdv);
-                 mopdv.adicionarItens(mopdvitens);
+                mopdv.adicionarItens(mopdvitens);
             }
+            mopdv.setValorTotal(valortotalVenda);
             mopdv.setId_clientes(receb_id_cliente);
             mopdv = controle.salvar(mopdv);
         }
@@ -215,6 +230,8 @@ public class viewPdv2 extends javax.swing.JFrame {
                 jButtonBuscaCliActionPerformed(evt);
             }
         });
+
+        jTextFieldTotalVenda.setFont(new java.awt.Font("Arial Black", 0, 36)); // NOI18N
 
         jTableVendaPdv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -460,8 +477,8 @@ public class viewPdv2 extends javax.swing.JFrame {
         recebeVendaSelecionada = dialog.getCodigoSelecionado();
         numVenda = recebeVendaSelecionada;
         jTextFieldNumVenda.setText(Integer.toString(recebeVendaSelecionada));
+
         carregaVendaItens();
-       
 
 
     }//GEN-LAST:event_jButtonBuscarVendaActionPerformed
@@ -567,4 +584,33 @@ public class viewPdv2 extends javax.swing.JFrame {
     public void setjTableVendaPdv(javax.swing.JTable jTableVendaPdv) {
         this.jTableVendaPdv = jTableVendaPdv;
     }
+
+    /**
+     * @return the valortotalVenda
+     */
+    public Double getValortotalVenda() {
+        return valortotalVenda;
+    }
+
+    /**
+     * @param valortotalVenda the valortotalVenda to set
+     */
+    public void setValortotalVenda(Double valortotalVenda) {
+        this.valortotalVenda = valortotalVenda;
+    }
+
+    /**
+     * @return the total
+     */
+    public Double getTotal() {
+        return total;
+    }
+
+    /**
+     * @param total the total to set
+     */
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
 }
