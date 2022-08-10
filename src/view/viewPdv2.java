@@ -46,7 +46,9 @@ public class viewPdv2 extends javax.swing.JFrame {
     private String receber, receberNomeCli = null;
     private Integer id_prod, receb_id_cliente, receberVenda;
 
-    Integer recebeVendaSelecionada, numVenda = 0, numProd = 0;
+    Integer recebeVendaSelecionada;
+    private Integer numVenda = 0;
+    Integer numProd = 0;
     private String receberDescProd, receberPreco, recebeIdProd, receberIdSelecionado;
 
     Double qde;
@@ -69,19 +71,16 @@ public class viewPdv2 extends javax.swing.JFrame {
         modelo.setRowCount(0);
 
         //   for (MoPdvItens venditens : pdvitensctr.carregaVendaId(numVenda)) {
-        for (MoPdvItens venditens : pdvitensctr.carregaVendaId(numVenda)) {
+        for (MoPdvItens venditens : pdvitensctr.carregaVendaId(getNumVenda())) {
             modelo.addRow(new Object[]{venditens.getId(), venditens.getProduto(), venditens.getQuantidade(), venditens.getValorUnitario()});
 
         }
-        BuscarVenda buvenda = new BuscarVenda();
-        total = buvenda.getValorSelecionado();
-        
-        if (total == null) {
-            JOptionPane.showMessageDialog(null, "valor zero");
-        } else {
+        List<MoPdv> vpdv = controle.ConsultarVendaPId(mopdv.getId());
+        for (MoPdv p : vpdv) {
+            setNumVenda(p.getId());
 
-            jTextFieldTotalVenda.setText(total.toString());
         }
+        jTextFieldTotalVenda.setText(Double.toString(total));
     }
 
     public void carregarTabela() {
@@ -127,10 +126,9 @@ public class viewPdv2 extends javax.swing.JFrame {
             mopdv = controle.salvar(mopdv);
             List<MoPdv> vpdv = controle.ConsultarVendaPId(mopdv.getId());
             for (MoPdv p : vpdv) {
-                numVenda = p.getId();
-
+                setNumVenda(p.getId());
             }
-            jTextFieldNumVenda.setText(Integer.toString(numVenda));
+            jTextFieldNumVenda.setText(Integer.toString(getNumVenda()));
 
         } catch (Exception ex) {
             Logger.getLogger(viewPdv2.class.getName()).log(Level.SEVERE, null, ex);
@@ -155,7 +153,7 @@ public class viewPdv2 extends javax.swing.JFrame {
                 mopdvitens.setProduto(moproduto);
                 mopdvitens.setQuantidade(qde);
                 mopdvitens.setVenda(mopdv);
-                mopdvitens.setId_venda(numVenda);
+                mopdvitens.setId_venda(getNumVenda());
 
                 mopdvitens.setValorUnitario((precoUnit));
 
@@ -167,7 +165,8 @@ public class viewPdv2 extends javax.swing.JFrame {
             mopdv.setId_clientes(receb_id_cliente);
             mopdv = controle.salvar(mopdv);
         }
-
+          viewCaixa dialog = new viewCaixa(new javax.swing.JFrame(), true);
+          dialog.setVisible(true);
         /*  List<MoPdvItens> mod = (List<MoPdvItens>) modelo;
         for (MoPdvItens mo : mod) {
             System.out.println("view.viewPdv2.pegarDadosTabela()" + mo.getProduto());
@@ -231,7 +230,8 @@ public class viewPdv2 extends javax.swing.JFrame {
             }
         });
 
-        jTextFieldTotalVenda.setFont(new java.awt.Font("Arial Black", 0, 36)); // NOI18N
+        jTextFieldTotalVenda.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
+        jTextFieldTotalVenda.setForeground(new java.awt.Color(0, 255, 0));
 
         jTableVendaPdv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -454,10 +454,9 @@ public class viewPdv2 extends javax.swing.JFrame {
             mopdv = controle.salvar(mopdv);
             List<MoPdv> vpdv = controle.ConsultarVendaPId(mopdv.getId());
             for (MoPdv p : vpdv) {
-                numVenda = p.getId();
-
+                setNumVenda(p.getId());
             }
-            jTextFieldNumVenda.setText(Integer.toString(numVenda));
+            jTextFieldNumVenda.setText(Integer.toString(getNumVenda()));
 
         } catch (Exception ex) {
             Logger.getLogger(viewPdv2.class.getName()).log(Level.SEVERE, null, ex);
@@ -475,9 +474,10 @@ public class viewPdv2 extends javax.swing.JFrame {
         BuscarVenda dialog = new BuscarVenda(new javax.swing.JFrame(), true);
         dialog.setVisible(true);
         recebeVendaSelecionada = dialog.getCodigoSelecionado();
-        numVenda = recebeVendaSelecionada;
+        total = dialog.getValorSelecionado();
+        setNumVenda(recebeVendaSelecionada);
         jTextFieldNumVenda.setText(Integer.toString(recebeVendaSelecionada));
-
+        jTextFieldTotalVenda.setText(Double.toString(total));
         carregaVendaItens();
 
 
@@ -611,6 +611,20 @@ public class viewPdv2 extends javax.swing.JFrame {
      */
     public void setTotal(Double total) {
         this.total = total;
+    }
+
+    /**
+     * @return the numVenda
+     */
+    public Integer getNumVenda() {
+        return numVenda;
+    }
+
+    /**
+     * @param numVenda the numVenda to set
+     */
+    public void setNumVenda(Integer numVenda) {
+        this.numVenda = numVenda;
     }
 
 }

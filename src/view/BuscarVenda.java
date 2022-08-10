@@ -38,19 +38,19 @@ public class BuscarVenda extends javax.swing.JDialog {
     }
 
     BuscarVenda() {
-      valorSelecionado = getValorSelecionado();
+        valorSelecionado = getValorSelecionado();
     }
-    
-      public void carregaVenda() {
+
+    public void carregaVenda() {
 
         DefaultTableModel modelo = (DefaultTableModel) getjTableBuscarVenda().getModel();
         for (MoPdv mopdv : controle.ConsultarVendaTodas()) {
 
-            modelo.addRow(new Object[]{mopdv.getId(), mopdv.getData(), mopdv.getId_clientes() ,mopdv.getValorTotal()});
-            
+            modelo.addRow(new Object[]{mopdv.getId(), mopdv.getData(), mopdv.getId_clientes(), mopdv.getValorTotal()});
+
         }
     }
-     
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -135,9 +135,9 @@ public class BuscarVenda extends javax.swing.JDialog {
         } else {
 
             setCodigoSelecionado(Integer.parseInt(getjTableBuscarVenda().getValueAt(linha, 0).toString()));
-           // setDataselecionada(getjTableBuscarVenda().getValueAt(linha, 1).toString());
-          // setClienteSelecionado(Integer.parseInt(getjTableBuscarVenda().getValueAt(linha, 2).toString()));
-           setValorSelecionado(Double.parseDouble(getjTableBuscarVenda().getValueAt(linha, 3).toString()));
+            // setDataselecionada(getjTableBuscarVenda().getValueAt(linha, 1).toString());
+            // setClienteSelecionado(Integer.parseInt(getjTableBuscarVenda().getValueAt(linha, 2).toString()));
+            setValorSelecionado(Double.parseDouble(getjTableBuscarVenda().getValueAt(linha, 3).toString()));
 
             this.dispose();
 
