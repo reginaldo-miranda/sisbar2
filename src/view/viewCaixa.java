@@ -15,21 +15,24 @@ public class viewCaixa extends javax.swing.JDialog {
     /**
      * Creates new form viewCaixa
      */
-   MoPdv mopdv = new MoPdv();
+    MoPdv mopdv = new MoPdv();
     private Integer receberNumVenda;
-    
+
     public viewCaixa(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         carregarDadosVenda();
+
+        //  jTextFieldNumVenda.setText(String.valueOf(vpdv2.getRecebeVendaSelecionada())) ;
     }
-   public void carregarDadosVenda(){
-       viewPdv2 pdv2 = new viewPdv2();
-       
-     
-       jTextFieldNumVenda.setText(pdv2.;
-       
-   }
+
+    public void carregarDadosVenda() {
+        new viewPdv2();
+        
+        jTextFieldNumVenda.setText(String.valueOf();
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

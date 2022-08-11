@@ -43,25 +43,28 @@ public class viewPdv2 extends javax.swing.JFrame {
 
     MoProdutos moproduto = new MoProdutos();
 
-    private String receber, receberNomeCli = null;
-    private Integer id_prod, receb_id_cliente, receberVenda;
+    private viewCaixa vcaixa;
+    private viewPdv2 vpdv2;
 
-    Integer recebeVendaSelecionada;
-    private Integer numVenda = 0;
-    Integer numProd = 0;
+    private String receber, receberNomeCli = null;
+    private Integer id_prod, idprod, receb_id_cliente, receberVenda;
+    private Integer recebeVendaSelecionada;
+
+    Integer numVenda = 0, numProd = 0;
     private String receberDescProd, receberPreco, recebeIdProd, receberIdSelecionado;
 
     Double qde;
-    Double precoUnit;
-    private Double valortotalVenda = 0.0, total = 0.0;
-    Integer idprod;
+
+    private Double valortotalVenda = 0.0, total = 0.0, precoUnit;
 
     /**
      * Creates new form viewPdv2
      */
     public viewPdv2() {
         initComponents();
+
         jButtonGravarItens.setEnabled(false);
+        //   this.vcaixa = new viewCaixa(this, true);
     }
 
     public void carregaVendaItens() {
@@ -165,8 +168,10 @@ public class viewPdv2 extends javax.swing.JFrame {
             mopdv.setId_clientes(receb_id_cliente);
             mopdv = controle.salvar(mopdv);
         }
-          viewCaixa dialog = new viewCaixa(new javax.swing.JFrame(), true);
-          dialog.setVisible(true);
+        viewCaixa dialog = new viewCaixa(new javax.swing.JFrame(), true);
+     
+        
+        dialog.setVisible(true);
         /*  List<MoPdvItens> mod = (List<MoPdvItens>) modelo;
         for (MoPdvItens mo : mod) {
             System.out.println("view.viewPdv2.pegarDadosTabela()" + mo.getProduto());
@@ -207,6 +212,7 @@ public class viewPdv2 extends javax.swing.JFrame {
         jButtonBuscarVenda = new javax.swing.JButton();
         jButtonGrade = new javax.swing.JButton();
         jButtonConcluir = new javax.swing.JButton();
+        jTextFieldTesteNumVenda = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -293,6 +299,8 @@ public class viewPdv2 extends javax.swing.JFrame {
             }
         });
 
+        jTextFieldTesteNumVenda.setText("jTextField1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -355,6 +363,8 @@ public class viewPdv2 extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jButtonGrade)
+                        .addGap(43, 43, 43)
+                        .addComponent(jTextFieldTesteNumVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -390,7 +400,9 @@ public class viewPdv2 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonGrade)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonGrade)
+                            .addComponent(jTextFieldTesteNumVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(51, 51, 51)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -455,9 +467,10 @@ public class viewPdv2 extends javax.swing.JFrame {
             List<MoPdv> vpdv = controle.ConsultarVendaPId(mopdv.getId());
             for (MoPdv p : vpdv) {
                 setNumVenda(p.getId());
+                setRecebeVendaSelecionada(getNumVenda());
             }
             jTextFieldNumVenda.setText(Integer.toString(getNumVenda()));
-
+            setRecebeVendaSelecionada(getNumVenda());
         } catch (Exception ex) {
             Logger.getLogger(viewPdv2.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -473,10 +486,10 @@ public class viewPdv2 extends javax.swing.JFrame {
 
         BuscarVenda dialog = new BuscarVenda(new javax.swing.JFrame(), true);
         dialog.setVisible(true);
-        recebeVendaSelecionada = dialog.getCodigoSelecionado();
+        setRecebeVendaSelecionada(dialog.getCodigoSelecionado());
         total = dialog.getValorSelecionado();
-        setNumVenda(recebeVendaSelecionada);
-        jTextFieldNumVenda.setText(Integer.toString(recebeVendaSelecionada));
+        setNumVenda(getRecebeVendaSelecionada());
+        jTextFieldNumVenda.setText(Integer.toString(getRecebeVendaSelecionada()));
         jTextFieldTotalVenda.setText(Double.toString(total));
         carregaVendaItens();
 
@@ -500,6 +513,7 @@ public class viewPdv2 extends javax.swing.JFrame {
     private void jButtonConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConcluirActionPerformed
         JOptionPane.showMessageDialog(null, "aqui");
         try {
+
             pegarDadosTabela();
             //  salvarVendaEItens();
         } catch (Exception ex) {
@@ -567,6 +581,7 @@ public class viewPdv2 extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldNomeCliente;
     private javax.swing.JTextField jTextFieldNumVenda;
     private javax.swing.JTextField jTextFieldQde;
+    private javax.swing.JTextField jTextFieldTesteNumVenda;
     private javax.swing.JTextField jTextFieldTotalVenda;
     private javax.swing.JTextField jTextFieldprecoUnit;
     // End of variables declaration//GEN-END:variables
@@ -625,6 +640,62 @@ public class viewPdv2 extends javax.swing.JFrame {
      */
     public void setNumVenda(Integer numVenda) {
         this.numVenda = numVenda;
+    }
+
+    /**
+     * @return the vcaixa
+     */
+    public viewCaixa getVcaixa() {
+        return vcaixa;
+    }
+
+    /**
+     * @param vcaixa the vcaixa to set
+     */
+    public void setVcaixa(viewCaixa vcaixa) {
+        this.vcaixa = vcaixa;
+    }
+
+    /**
+     * @return the vpdv2
+     */
+    public viewPdv2 getVpdv2() {
+        return vpdv2;
+    }
+
+    /**
+     * @param vpdv2 the vpdv2 to set
+     */
+    public void setVpdv2(viewPdv2 vpdv2) {
+        this.vpdv2 = vpdv2;
+    }
+
+    /**
+     * @return the receberVenda
+     */
+    public Integer getReceberVenda() {
+        return receberVenda;
+    }
+
+    /**
+     * @param receberVenda the receberVenda to set
+     */
+    public void setReceberVenda(Integer receberVenda) {
+        this.receberVenda = receberVenda;
+    }
+
+    /**
+     * @return the recebeVendaSelecionada
+     */
+    public Integer getRecebeVendaSelecionada() {
+        return recebeVendaSelecionada;
+    }
+
+    /**
+     * @param recebeVendaSelecionada the recebeVendaSelecionada to set
+     */
+    public void setRecebeVendaSelecionada(Integer recebeVendaSelecionada) {
+        this.recebeVendaSelecionada = recebeVendaSelecionada;
     }
 
 }
