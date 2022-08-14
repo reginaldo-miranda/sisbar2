@@ -5,6 +5,7 @@
 package view;
 
 import model.MoPdv;
+import model.MoPdvItens;
 
 /**
  *
@@ -16,20 +17,20 @@ public class viewCaixa extends javax.swing.JDialog {
      * Creates new form viewCaixa
      */
     MoPdv mopdv = new MoPdv();
-    private Integer receberNumVenda;
+    MoPdvItens mopdvitens = new MoPdvItens();
+    
+    private Integer receberNumVenda = 0;
 
     public viewCaixa(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        carregarDadosVenda();
-
+        passarIdVenda(receberNumVenda);
         //  jTextFieldNumVenda.setText(String.valueOf(vpdv2.getRecebeVendaSelecionada())) ;
     }
 
-    public void carregarDadosVenda() {
-        new viewPdv2();
-        
-        jTextFieldNumVenda.setText(String.valueOf();
+    public void passarIdVenda(Integer receberNumVenda) {
+                
+        jTextFieldNumVenda.setText(Integer.toString(receberNumVenda));
 
     }
 

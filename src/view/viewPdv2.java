@@ -168,8 +168,10 @@ public class viewPdv2 extends javax.swing.JFrame {
             mopdv.setId_clientes(receb_id_cliente);
             mopdv = controle.salvar(mopdv);
         }
+        
         viewCaixa dialog = new viewCaixa(new javax.swing.JFrame(), true);
-     
+        receberVenda = Integer.parseInt(jTextFieldNumVenda.getText());
+        dialog.passarIdVenda(receberVenda);
         
         dialog.setVisible(true);
         /*  List<MoPdvItens> mod = (List<MoPdvItens>) modelo;
@@ -217,6 +219,12 @@ public class viewPdv2 extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("N: Vendas");
+
+        jTextFieldNumVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNumVendaActionPerformed(evt);
+            }
+        });
 
         jButtonSair.setText("Sair");
         jButtonSair.addActionListener(new java.awt.event.ActionListener() {
@@ -520,6 +528,10 @@ public class viewPdv2 extends javax.swing.JFrame {
             Logger.getLogger(viewPdv2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonConcluirActionPerformed
+
+    private void jTextFieldNumVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNumVendaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNumVendaActionPerformed
 
     /**
      * @param args the command line arguments
