@@ -20,18 +20,20 @@ public class viewCaixa extends javax.swing.JDialog {
     MoPdvItens mopdvitens = new MoPdvItens();
     
     private Integer receberNumVenda = 0;
+    private Double total = 0.0,falta = 0.0, troco = 0.0;
+    private Double dinheiro = 0.0, cartao = 0.0, pix = 0.0, cheque = 0.0;
 
     public viewCaixa(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        passarIdVenda(receberNumVenda);
+        passarIdVenda(receberNumVenda, total);
         //  jTextFieldNumVenda.setText(String.valueOf(vpdv2.getRecebeVendaSelecionada())) ;
     }
 
-    public void passarIdVenda(Integer receberNumVenda) {
+    public void passarIdVenda(Integer receberNumVenda, Double total) {
                 
         jTextFieldNumVenda.setText(Integer.toString(receberNumVenda));
-
+        jTextFieldTotal.setText(Double.toString(total));
     }
 
     /**

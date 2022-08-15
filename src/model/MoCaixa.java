@@ -20,17 +20,22 @@ import javax.persistence.Table;
 
 @Table(name = "caixa")
 public class MoCaixa implements EntidadeBase, Serializable {
-     
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
+
     private Double valotTotal;
-    private Double valorRecebido;
     private Double faltaReceber;
     private Double valorTroco;
+
+    private Double valorRecebido;
+
     private String tiporecebido;
     private int parcelas;
+
+  //  private Double total = 0.0, falta = 0.0, troco = 0.0;
+    private Double dinheiro = 0.0, cartao = 0.0, pix = 0.0, cheque = 0.0;
 
     public MoCaixa() {
     }
@@ -38,7 +43,6 @@ public class MoCaixa implements EntidadeBase, Serializable {
     /**
      * @return the id
      */
-  
     public Integer getId() {
         return id;
     }
@@ -155,6 +159,5 @@ public class MoCaixa implements EntidadeBase, Serializable {
         final MoCaixa other = (MoCaixa) obj;
         return this.id == other.id;
     }
-    
-    
+
 }

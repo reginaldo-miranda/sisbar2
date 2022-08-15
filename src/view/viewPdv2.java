@@ -171,7 +171,7 @@ public class viewPdv2 extends javax.swing.JFrame {
         
         viewCaixa dialog = new viewCaixa(new javax.swing.JFrame(), true);
         receberVenda = Integer.parseInt(jTextFieldNumVenda.getText());
-        dialog.passarIdVenda(receberVenda);
+        dialog.passarIdVenda(receberVenda, valortotalVenda );
         
         dialog.setVisible(true);
         /*  List<MoPdvItens> mod = (List<MoPdvItens>) modelo;
