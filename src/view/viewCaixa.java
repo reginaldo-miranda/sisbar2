@@ -6,6 +6,9 @@ package view;
 
 import model.MoPdv;
 import model.MoPdvItens;
+import controle.caixaControle;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 /**
  *
@@ -18,22 +21,45 @@ public class viewCaixa extends javax.swing.JDialog {
      */
     MoPdv mopdv = new MoPdv();
     MoPdvItens mopdvitens = new MoPdvItens();
-    
+    caixaControle cxcontrole = new caixaControle();
+
     private Integer receberNumVenda = 0;
-    private Double total = 0.0,falta = 0.0, troco = 0.0;
-    private Double dinheiro = 0.0, cartao = 0.0, pix = 0.0, cheque = 0.0;
+    private Double total = 0.0, falta = 0.0, troco = 0.0;
+    private Double dinheiro = 0.0, cartao = 0.0, pix = 0.0, cheque = 0.0, totalRecebido = 0.0;
 
     public viewCaixa(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         passarIdVenda(receberNumVenda, total);
+
         //  jTextFieldNumVenda.setText(String.valueOf(vpdv2.getRecebeVendaSelecionada())) ;
     }
 
     public void passarIdVenda(Integer receberNumVenda, Double total) {
-                
+
         jTextFieldNumVenda.setText(Integer.toString(receberNumVenda));
         jTextFieldTotal.setText(Double.toString(total));
+    }
+
+    public void pegarDadosJtextfild() {
+
+        total = Double.parseDouble(jTextFieldTotal.getText());
+
+        dinheiro = Double.parseDouble(jTextFieldDinheiro.getText());
+        cartao = Double.parseDouble(jTextFieldCartao.getText());
+        pix = Double.parseDouble(jTextFieldPix.getText());
+        cheque = Double.parseDouble(jTextFieldCheque.getText());
+
+      
+
+        cxcontrole.calculosCaixa(total, dinheiro, cartao, pix, cheque);
+        //    Double[] opcoespgto = {dinheiro,cartao,pix,cheque};
+
+    }
+
+    public void somaRecebido() {
+           totalRecebido = (dinheiro + cartao + pix + cheque);
+          jTextFieldTotalRecebido.setText(Double.toString(totalRecebido));
     }
 
     /**
@@ -63,6 +89,8 @@ public class viewCaixa extends javax.swing.JDialog {
         jTextFieldTroco = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jTextFieldNumVenda = new javax.swing.JTextField();
+        jTextFieldTotalRecebido = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Caixa");
@@ -80,6 +108,12 @@ public class viewCaixa extends javax.swing.JDialog {
         jLabel1.setText("Total ");
 
         jLabel2.setText("Dinheiro");
+
+        jTextFieldDinheiro.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldDinheiroFocusLost(evt);
+            }
+        });
 
         jLabel3.setText("Cartao");
 
@@ -100,6 +134,11 @@ public class viewCaixa extends javax.swing.JDialog {
         jLabel5.setText("Cheque");
 
         jButtonFecharVenda.setText("Fechar a Venda");
+        jButtonFecharVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonFecharVendaActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
         jLabel6.setText("Falta");
@@ -108,6 +147,8 @@ public class viewCaixa extends javax.swing.JDialog {
         jLabel7.setText("Troco");
 
         jLabel8.setText("N: Venda");
+
+        jLabel9.setText("Total Recebido");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,10 +159,12 @@ public class viewCaixa extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel5)
                             .addComponent(jLabel3)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel4)))
+                            .addComponent(jLabel4)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel9)
+                                .addComponent(jLabel5))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel8))
@@ -148,13 +191,14 @@ public class viewCaixa extends javax.swing.JDialog {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(80, 80, 80)
                                         .addComponent(jLabel7)
-                                        .addGap(0, 93, Short.MAX_VALUE))
+                                        .addGap(0, 60, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jTextFieldTroco, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTextFieldTotalRecebido)
                             .addComponent(jButtonFecharVenda, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
                             .addComponent(jTextFieldTotal, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldDinheiro, javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,9 +245,13 @@ public class viewCaixa extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jTextFieldCheque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldTotalRecebido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(jButtonFecharVenda)
-                .addGap(51, 51, 51))
+                .addGap(32, 32, 32))
         );
 
         pack();
@@ -221,6 +269,16 @@ public class viewCaixa extends javax.swing.JDialog {
     private void jTextFieldPixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPixActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldPixActionPerformed
+
+    private void jButtonFecharVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharVendaActionPerformed
+
+        pegarDadosJtextfild();
+    }//GEN-LAST:event_jButtonFecharVendaActionPerformed
+
+    private void jTextFieldDinheiroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldDinheiroFocusLost
+        pegarDadosJtextfild();
+        somaRecebido();        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldDinheiroFocusLost
 
     /**
      * @param args the command line arguments
@@ -275,6 +333,7 @@ public class viewCaixa extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField jTextFieldCartao;
     private javax.swing.JTextField jTextFieldCheque;
     private javax.swing.JTextField jTextFieldDinheiro;
@@ -282,6 +341,7 @@ public class viewCaixa extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldNumVenda;
     private javax.swing.JTextField jTextFieldPix;
     private javax.swing.JTextField jTextFieldTotal;
+    private javax.swing.JTextField jTextFieldTotalRecebido;
     private javax.swing.JTextField jTextFieldTroco;
     // End of variables declaration//GEN-END:variables
 }
