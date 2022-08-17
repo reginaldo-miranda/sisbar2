@@ -455,7 +455,8 @@ public class viewPdv2 extends javax.swing.JFrame {
         receberIdSelecionado = dialog.getProdIdSelecionado();
         receberDescProd = dialog.getDescSelecionado();
         receberPreco = dialog.getPrecoSelecionado();
-
+   
+        jTextFieldQde.setText(Double.toString(2));
         jTextFieldCodigoProd.setText(receberIdSelecionado);
         jTextFieldDescricaoProd.setText(receberDescProd);
         jTextFieldprecoUnit.setText(receberPreco);

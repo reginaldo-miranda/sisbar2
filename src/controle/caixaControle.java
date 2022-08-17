@@ -20,31 +20,53 @@ public class caixaControle extends DaoGenerico<MoCaixa> {
     public caixaControle() {
 
     }
+    public void teste(Double total){
+        JOptionPane.showMessageDialog(null, "aqui na teste" + total);
+    }
 
     public void calculosCaixa(Double total, Double dinheiro, Double cartao, Double pix, Double cheque) {
 
         totalVendaRecebido = total;
+        JOptionPane.showMessageDialog(null, "aqui na teste" + total);
         dinhRecebido = dinheiro;
         cartaoRecebido = cartao;
         pixRecebeido = pix;
-        chequeRecebido = cheque;
+        chequeRecebido = cheque; 
         
         totalOpcoes = (dinhRecebido + cartaoRecebido + pixRecebeido + chequeRecebido);
 
         if (totalVendaRecebido < totalOpcoes) {
-            //     preencher campo falta
-            //    nao encerrar a venda    
-            JOptionPane.showMessageDialog(null, "total venda menor q opções");
+            
+            falta =  (totalVendaRecebido - totalOpcoes);
+      //      setFalta(falta);
+            
+          //    nao encerrar a venda    
+            JOptionPane.showMessageDialog(null, "total venda menor q opções falta " + falta);
         }
         if (totalVendaRecebido > totalOpcoes) {
-            JOptionPane.showMessageDialog(null, "total venda maior q opções");
+           JOptionPane.showMessageDialog(null, "total venda maior q opções");
             // preencher campo troco    
             //encerrar a venda      */  
         }
         if (totalVendaRecebido.equals(totalOpcoes)) {
-            JOptionPane.showMessageDialog(null, "total venda igual as opções");
+        //    JOptionPane.showMessageDialog(null, "total venda igual as opções");
             // encerrar a venda
         }
+       
     }
 
+    /**
+     * @return the falta
+     */
+    public Double getFalta() {
+        return falta;
+    }
+
+    /**
+     * @param falta the falta to set
+     */
+    public void setFalta(Double falta) {
+        this.falta = falta;
+    }
+     
 }

@@ -9,6 +9,7 @@ import model.MoPdvItens;
 import controle.caixaControle;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,7 +26,7 @@ public class viewCaixa extends javax.swing.JDialog {
 
     private Integer receberNumVenda = 0;
     private Double total = 0.0, falta = 0.0, troco = 0.0;
-    private Double dinheiro = 0.0, cartao = 0.0, pix = 0.0, cheque = 0.0, totalRecebido = 0.0;
+    private Double dinheiro, cartao, pix, cheque, totalRecebido;
 
     public viewCaixa(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -45,21 +46,44 @@ public class viewCaixa extends javax.swing.JDialog {
 
         total = Double.parseDouble(jTextFieldTotal.getText());
 
-        dinheiro = Double.parseDouble(jTextFieldDinheiro.getText());
-        cartao = Double.parseDouble(jTextFieldCartao.getText());
-        pix = Double.parseDouble(jTextFieldPix.getText());
-        cheque = Double.parseDouble(jTextFieldCheque.getText());
+        if (jTextFieldDinheiro.getText().isEmpty()) {
+            jTextFieldDinheiro.setText(Double.toString(0));
+            dinheiro = 0.0;
+        } else {
+            dinheiro = Double.parseDouble(jTextFieldDinheiro.getText());
+        }
 
-      
+        if (jTextFieldCartao.getText().isEmpty()) {
+            jTextFieldCartao.setText("");
+            cartao = 0.0;
+        } else {
+            cartao = Double.parseDouble(jTextFieldCartao.getText());
+        }
+
+        if (jTextFieldPix.getText().isEmpty()) {
+            jTextFieldPix.setText("");
+            pix = 0.0;
+        } else {
+            pix = Double.parseDouble(jTextFieldPix.getText());
+        }
+
+        if (jTextFieldCheque.getText().isEmpty()) {
+            jTextFieldCheque.setText("");
+            cheque = 0.0;
+        } else {
+            cheque = Double.parseDouble(jTextFieldCheque.getText());
+        }
+
+        //    Double[] opcoespgto = {dinheiro,cartao,pix,cheque};
+        somaRecebido();
 
         cxcontrole.calculosCaixa(total, dinheiro, cartao, pix, cheque);
-        //    Double[] opcoespgto = {dinheiro,cartao,pix,cheque};
-
+        //  cxcontrole.teste(total);
     }
 
     public void somaRecebido() {
-           totalRecebido = (dinheiro + cartao + pix + cheque);
-          jTextFieldTotalRecebido.setText(Double.toString(totalRecebido));
+        totalRecebido = (dinheiro + cartao + pix + cheque);
+        jTextFieldTotalRecebido.setText(Double.toString(totalRecebido));
     }
 
     /**
@@ -117,6 +141,11 @@ public class viewCaixa extends javax.swing.JDialog {
 
         jLabel3.setText("Cartao");
 
+        jTextFieldCartao.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldCartaoFocusLost(evt);
+            }
+        });
         jTextFieldCartao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldCartaoActionPerformed(evt);
@@ -125,6 +154,11 @@ public class viewCaixa extends javax.swing.JDialog {
 
         jLabel4.setText("Pix");
 
+        jTextFieldPix.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldPixFocusLost(evt);
+            }
+        });
         jTextFieldPix.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldPixActionPerformed(evt);
@@ -132,6 +166,12 @@ public class viewCaixa extends javax.swing.JDialog {
         });
 
         jLabel5.setText("Cheque");
+
+        jTextFieldCheque.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldChequeFocusLost(evt);
+            }
+        });
 
         jButtonFecharVenda.setText("Fechar a Venda");
         jButtonFecharVenda.addActionListener(new java.awt.event.ActionListener() {
@@ -271,14 +311,29 @@ public class viewCaixa extends javax.swing.JDialog {
     }//GEN-LAST:event_jTextFieldPixActionPerformed
 
     private void jButtonFecharVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharVendaActionPerformed
-
-        pegarDadosJtextfild();
+        JOptionPane.showMessageDialog(null, "estou no concluir bl ? petista");
+        //   cxcontrole.calculosCaixa(total, dinheiro, cartao, pix, cheque);
+        //  jTextFieldFalta.setText(cxcontrole.getFalta().toString());
     }//GEN-LAST:event_jButtonFecharVendaActionPerformed
 
     private void jTextFieldDinheiroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldDinheiroFocusLost
         pegarDadosJtextfild();
-        somaRecebido();        // TODO add your handling code here:
+        //   cxcontrole.calculosCaixa(total, dinheiro, cartao, pix, cheque);
+        // jTextFieldFalta.setText(cxcontrole.getFalta().toString());
+        // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldDinheiroFocusLost
+
+    private void jTextFieldCartaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldCartaoFocusLost
+        pegarDadosJtextfild();
+    }//GEN-LAST:event_jTextFieldCartaoFocusLost
+
+    private void jTextFieldPixFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldPixFocusLost
+        pegarDadosJtextfild();
+    }//GEN-LAST:event_jTextFieldPixFocusLost
+
+    private void jTextFieldChequeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldChequeFocusLost
+        pegarDadosJtextfild();
+    }//GEN-LAST:event_jTextFieldChequeFocusLost
 
     /**
      * @param args the command line arguments

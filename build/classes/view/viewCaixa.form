@@ -200,6 +200,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldCartao">
       <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldCartaoFocusLost"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldCartaoActionPerformed"/>
       </Events>
     </Component>
@@ -210,6 +211,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldPix">
       <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldPixFocusLost"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldPixActionPerformed"/>
       </Events>
     </Component>
@@ -219,6 +221,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldCheque">
+      <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldChequeFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonFecharVenda">
       <Properties>
