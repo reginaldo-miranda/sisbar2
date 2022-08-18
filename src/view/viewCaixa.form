@@ -71,7 +71,7 @@
                                   <Group type="102" attributes="0">
                                       <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
                                       <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="60" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace max="32767" attributes="0"/>
@@ -152,7 +152,7 @@
                   <Component id="jTextFieldTotalRecebido" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="34" max="32767" attributes="0"/>
+              <EmptySpace pref="28" max="32767" attributes="0"/>
               <Component id="jButtonFecharVenda" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
           </Group>
@@ -250,6 +250,11 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldFalta">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Arial Black" size="24" style="0"/>
+        </Property>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldTroco">
     </Component>
@@ -261,9 +266,17 @@
     <Component class="javax.swing.JTextField" name="jTextFieldNumVenda">
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldTotalRecebido">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Arial Black" size="18" style="0"/>
+        </Property>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel9">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Arial Black" size="18" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Total Recebido"/>
       </Properties>
     </Component>

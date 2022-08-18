@@ -9,6 +9,7 @@ import model.MoPdvItens;
 import controle.caixaControle;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import static java.lang.Double.isNaN;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,65 +26,36 @@ public class viewCaixa extends javax.swing.JDialog {
     caixaControle cxcontrole = new caixaControle();
 
     private Integer receberNumVenda = 0;
-    private Double total = 0.0, falta = 0.0, troco = 0.0;
-    private Double dinheiro, cartao, pix, cheque, totalRecebido;
+    private Double total = 0.0, falta = 0.0, troco = 0.0, novototal = 0.0;
+    private Double dinheiro = 0.0, cartao = 0.0, pix = 0.0, cheque = 0.0, totalRecebido = 0.0;
 
     public viewCaixa(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         passarIdVenda(receberNumVenda, total);
 
-        //  jTextFieldNumVenda.setText(String.valueOf(vpdv2.getRecebeVendaSelecionada())) ;
     }
 
     public void passarIdVenda(Integer receberNumVenda, Double total) {
 
         jTextFieldNumVenda.setText(Integer.toString(receberNumVenda));
+        novototal = total;
         jTextFieldTotal.setText(Double.toString(total));
     }
 
-    public void pegarDadosJtextfild() {
-
-        total = Double.parseDouble(jTextFieldTotal.getText());
-
-        if (jTextFieldDinheiro.getText().isEmpty()) {
-            jTextFieldDinheiro.setText(Double.toString(0));
-            dinheiro = 0.0;
-        } else {
-            dinheiro = Double.parseDouble(jTextFieldDinheiro.getText());
-        }
-
-        if (jTextFieldCartao.getText().isEmpty()) {
-            jTextFieldCartao.setText("");
-            cartao = 0.0;
-        } else {
-            cartao = Double.parseDouble(jTextFieldCartao.getText());
-        }
-
-        if (jTextFieldPix.getText().isEmpty()) {
-            jTextFieldPix.setText("");
-            pix = 0.0;
-        } else {
-            pix = Double.parseDouble(jTextFieldPix.getText());
-        }
-
-        if (jTextFieldCheque.getText().isEmpty()) {
-            jTextFieldCheque.setText("");
-            cheque = 0.0;
-        } else {
-            cheque = Double.parseDouble(jTextFieldCheque.getText());
-        }
-
-        //    Double[] opcoespgto = {dinheiro,cartao,pix,cheque};
-        somaRecebido();
-
-        cxcontrole.calculosCaixa(total, dinheiro, cartao, pix, cheque);
-        //  cxcontrole.teste(total);
-    }
-
     public void somaRecebido() {
+
         totalRecebido = (dinheiro + cartao + pix + cheque);
         jTextFieldTotalRecebido.setText(Double.toString(totalRecebido));
+        falta = novototal - totalRecebido;
+
+        if (totalRecebido > novototal) {
+            troco = novototal - totalRecebido;
+            jTextFieldTroco.setText(Double.toString(troco));
+        } else {
+            jTextFieldFalta.setText(Double.toString(falta));
+        }
+
     }
 
     /**
@@ -186,8 +158,13 @@ public class viewCaixa extends javax.swing.JDialog {
         jLabel7.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
         jLabel7.setText("Troco");
 
+        jTextFieldFalta.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
+
         jLabel8.setText("N: Venda");
 
+        jTextFieldTotalRecebido.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
+
+        jLabel9.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         jLabel9.setText("Total Recebido");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -231,7 +208,7 @@ public class viewCaixa extends javax.swing.JDialog {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(80, 80, 80)
                                         .addComponent(jLabel7)
-                                        .addGap(0, 60, Short.MAX_VALUE))
+                                        .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jTextFieldTroco, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -289,7 +266,7 @@ public class viewCaixa extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldTotalRecebido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(jButtonFecharVenda)
                 .addGap(32, 32, 32))
         );
@@ -317,22 +294,49 @@ public class viewCaixa extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonFecharVendaActionPerformed
 
     private void jTextFieldDinheiroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldDinheiroFocusLost
-        pegarDadosJtextfild();
-        //   cxcontrole.calculosCaixa(total, dinheiro, cartao, pix, cheque);
-        // jTextFieldFalta.setText(cxcontrole.getFalta().toString());
-        // TODO add your handling code here:
+        //  pegarDadosJtextfild();
+        if (jTextFieldDinheiro.getText().isEmpty()) {
+            jTextFieldDinheiro.setText(Double.toString(0));
+            dinheiro = 0.0;
+            jTextFieldTotalRecebido.setText("");
+            jTextFieldTroco.setText("");
+        } else {
+            dinheiro = Double.parseDouble(jTextFieldDinheiro.getText());
+        }
+        somaRecebido();
     }//GEN-LAST:event_jTextFieldDinheiroFocusLost
 
     private void jTextFieldCartaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldCartaoFocusLost
-        pegarDadosJtextfild();
+        //  pegarDadosJtextfild();
+        if (jTextFieldCartao.getText().isEmpty()) {
+            jTextFieldCartao.setText("");
+            cartao = 0.0;
+        } else {
+            cartao = Double.parseDouble(jTextFieldCartao.getText());
+        }
+        somaRecebido();
     }//GEN-LAST:event_jTextFieldCartaoFocusLost
 
     private void jTextFieldPixFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldPixFocusLost
-        pegarDadosJtextfild();
+        //pegarDadosJtextfild();
+        if (jTextFieldPix.getText().isEmpty()) {
+            jTextFieldPix.setText("");
+            pix = 0.0;
+        } else {
+            pix = Double.parseDouble(jTextFieldPix.getText());
+        }
+        somaRecebido();
     }//GEN-LAST:event_jTextFieldPixFocusLost
 
     private void jTextFieldChequeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldChequeFocusLost
-        pegarDadosJtextfild();
+        //  pegarDadosJtextfild();
+        if (jTextFieldCheque.getText().isEmpty()) {
+            jTextFieldCheque.setText("");
+            cheque = 0.0;
+        } else {
+            cheque = Double.parseDouble(jTextFieldCheque.getText());
+        }
+        somaRecebido();
     }//GEN-LAST:event_jTextFieldChequeFocusLost
 
     /**
@@ -375,6 +379,7 @@ public class viewCaixa extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -399,4 +404,18 @@ public class viewCaixa extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldTotalRecebido;
     private javax.swing.JTextField jTextFieldTroco;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the total
+     */
+    public Double getTotal() {
+        return total;
+    }
+
+    /**
+     * @param total the total to set
+     */
+    public void setTotal(Double total) {
+        this.total = total;
+    }
 }

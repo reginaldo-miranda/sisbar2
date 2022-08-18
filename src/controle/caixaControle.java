@@ -38,9 +38,9 @@ public class caixaControle extends DaoGenerico<MoCaixa> {
         if (totalVendaRecebido < totalOpcoes) {
             
             falta =  (totalVendaRecebido - totalOpcoes);
-      //      setFalta(falta);
+            //      setFalta(falta);
             
-          //    nao encerrar a venda    
+            //    nao encerrar a venda    
             JOptionPane.showMessageDialog(null, "total venda menor q opções falta " + falta);
         }
         if (totalVendaRecebido > totalOpcoes) {
@@ -49,7 +49,7 @@ public class caixaControle extends DaoGenerico<MoCaixa> {
             //encerrar a venda      */  
         }
         if (totalVendaRecebido.equals(totalOpcoes)) {
-        //    JOptionPane.showMessageDialog(null, "total venda igual as opções");
+            //    JOptionPane.showMessageDialog(null, "total venda igual as opções");
             // encerrar a venda
         }
        
