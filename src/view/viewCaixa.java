@@ -33,6 +33,7 @@ public class viewCaixa extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         passarIdVenda(receberNumVenda, total);
+        jTextFieldDinheiro.requestFocus();
 
     }
 
@@ -50,8 +51,9 @@ public class viewCaixa extends javax.swing.JDialog {
         falta = novototal - totalRecebido;
 
         if (totalRecebido > novototal) {
-            troco = novototal - totalRecebido;
+            troco =  totalRecebido - novototal;
             jTextFieldTroco.setText(Double.toString(troco));
+            jTextFieldFalta.setText("");
         } else {
             jTextFieldFalta.setText(Double.toString(falta));
         }
@@ -99,6 +101,7 @@ public class viewCaixa extends javax.swing.JDialog {
         });
 
         jTextFieldTotal.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
+        jTextFieldTotal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
         jLabel1.setText("Total ");
@@ -159,6 +162,11 @@ public class viewCaixa extends javax.swing.JDialog {
         jLabel7.setText("Troco");
 
         jTextFieldFalta.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
+        jTextFieldFalta.setForeground(new java.awt.Color(204, 51, 0));
+        jTextFieldFalta.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        jTextFieldTroco.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
+        jTextFieldTroco.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
         jLabel8.setText("N: Venda");
 
@@ -179,9 +187,8 @@ public class viewCaixa extends javax.swing.JDialog {
                             .addComponent(jLabel3)
                             .addComponent(jLabel2)
                             .addComponent(jLabel4)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel9)
-                                .addComponent(jLabel5))))
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel5)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel8))
@@ -192,27 +199,19 @@ public class viewCaixa extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
+                        .addGap(114, 114, 114)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldFalta, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButtonSair))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(132, 132, 132)
-                                        .addComponent(jLabel6))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(114, 114, 114)
-                                        .addComponent(jTextFieldFalta, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(80, 80, 80)
-                                        .addComponent(jLabel7)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jTextFieldTroco, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))))))
+                                .addComponent(jTextFieldTroco, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jTextFieldTotalRecebido)
