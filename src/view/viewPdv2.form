@@ -84,7 +84,7 @@
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="jButtonBuscarProduto" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jButtonGravarItens" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jButtonGrade" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jButtonConcluir" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -99,11 +99,6 @@
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButtonGrade" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -152,13 +147,11 @@
                   <Component id="jTextFieldDescricaoProd" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTextFieldprecoUnit" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonBuscarProduto" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButtonGravarItens" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTextFieldQde" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonConcluir" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonGrade" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButtonGrade" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -297,14 +290,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNovoCupomActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="jButtonGravarItens">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Gravar"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonGravarItensActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">

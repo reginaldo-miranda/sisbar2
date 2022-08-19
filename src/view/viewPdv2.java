@@ -67,15 +67,15 @@ public class viewPdv2 extends javax.swing.JFrame {
     }
 
     public void desbilitarBtn() {
-        jButtonGravarItens.setEnabled(false);
+
         jButtonBuscaCli.setEnabled(false);
         jButtonConcluir.setEnabled(false);
         jButtonBuscarProduto.setEnabled(false);
         jButtonGrade.setEnabled(false);
     }
-    
-    public void habilitarBtn(){
-        jButtonGravarItens.setEnabled(true);
+
+    public void habilitarBtn() {
+
         jButtonBuscaCli.setEnabled(true);
         jButtonConcluir.setEnabled(true);
         jButtonBuscarProduto.setEnabled(true);
@@ -223,7 +223,6 @@ public class viewPdv2 extends javax.swing.JFrame {
         jTextFieldprecoUnit = new javax.swing.JTextField();
         jButtonBuscarProduto = new javax.swing.JButton();
         jButtonNovoCupom = new javax.swing.JButton();
-        jButtonGravarItens = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jTextFieldQde = new javax.swing.JTextField();
         jButtonBuscarVenda = new javax.swing.JButton();
@@ -288,13 +287,6 @@ public class viewPdv2 extends javax.swing.JFrame {
         jButtonNovoCupom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonNovoCupomActionPerformed(evt);
-            }
-        });
-
-        jButtonGravarItens.setText("Gravar");
-        jButtonGravarItens.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonGravarItensActionPerformed(evt);
             }
         });
 
@@ -376,7 +368,7 @@ public class viewPdv2 extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(jButtonBuscarProduto)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButtonGravarItens)
+                                        .addComponent(jButtonGrade)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jButtonConcluir)))
                                 .addGap(0, 31, Short.MAX_VALUE))))
@@ -384,10 +376,6 @@ public class viewPdv2 extends javax.swing.JFrame {
                         .addGap(6, 280, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButtonGrade)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -427,12 +415,10 @@ public class viewPdv2 extends javax.swing.JFrame {
                     .addComponent(jTextFieldDescricaoProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldprecoUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonBuscarProduto)
-                    .addComponent(jButtonGravarItens)
                     .addComponent(jTextFieldQde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonConcluir))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonGrade)
-                .addGap(51, 51, 51))
+                    .addComponent(jButtonConcluir)
+                    .addComponent(jButtonGrade))
+                .addGap(83, 83, 83))
         );
 
         pack();
@@ -492,12 +478,6 @@ public class viewPdv2 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonNovoCupomActionPerformed
 
-    private void jButtonGravarItensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGravarItensActionPerformed
-
-        // salvarItens();
-
-    }//GEN-LAST:event_jButtonGravarItensActionPerformed
-
     private void jButtonBuscarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarVendaActionPerformed
 
         BuscarVenda dialog = new BuscarVenda(new javax.swing.JFrame(), true);
@@ -508,6 +488,7 @@ public class viewPdv2 extends javax.swing.JFrame {
         jTextFieldNumVenda.setText(Integer.toString(getRecebeVendaSelecionada()));
         jTextFieldTotalVenda.setText(Double.toString(total));
         carregaVendaItens();
+        carregaClienteJdailog();
 
 
     }//GEN-LAST:event_jButtonBuscarVendaActionPerformed
@@ -583,7 +564,6 @@ public class viewPdv2 extends javax.swing.JFrame {
     private javax.swing.JButton jButtonBuscarVenda;
     private javax.swing.JButton jButtonConcluir;
     private javax.swing.JButton jButtonGrade;
-    private javax.swing.JButton jButtonGravarItens;
     private javax.swing.JButton jButtonNovoCupom;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JLabel jLabel1;
