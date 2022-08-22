@@ -21,6 +21,10 @@ public class BuscaCliente extends javax.swing.JDialog {
         initComponents();
         carregaClienteJdailog();
     }
+
+    BuscaCliente() {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
       public void carregaClienteJdailog() {
 
         DefaultTableModel modelo = (DefaultTableModel) getjTableViewBuscaCli().getModel();

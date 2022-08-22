@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.MoClientes;
 import model.MoPdv;
 import model.MoPdvItens;
 import model.MoPdvItens_;
@@ -41,14 +42,16 @@ public class viewPdv2 extends javax.swing.JFrame {
 
     ClientesControle clicontrole = new ClientesControle();
 
+    BuscaCliente buscacliente = new BuscaCliente();
+
     MoProdutos moproduto = new MoProdutos();
 
     private viewCaixa vcaixa;
     private viewPdv2 vpdv2;
 
-    private String receber, receberNomeCli = null;
+    private String receber, receberNomeCli = null, receberNomeCliSelecionado;
     private Integer id_prod, idprod, receb_id_cliente, receberVenda;
-    private Integer recebeVendaSelecionada;
+    private Integer recebeVendaSelecionada, receberIdClienteSelecionado;
 
     Integer numVenda = 0, numProd = 0;
     private String receberDescProd, receberPreco, recebeIdProd, receberIdSelecionado;
@@ -482,13 +485,19 @@ public class viewPdv2 extends javax.swing.JFrame {
 
         BuscarVenda dialog = new BuscarVenda(new javax.swing.JFrame(), true);
         dialog.setVisible(true);
+     
         setRecebeVendaSelecionada(dialog.getCodigoSelecionado());
+        setReceberIdClienteSelecionado(dialog.getClienteSelecionado());
+        // setReceberNomeCliSelecionado(dialogcli.getNomeclieSelecionado());
+        
         total = dialog.getValorSelecionado();
         setNumVenda(getRecebeVendaSelecionada());
         jTextFieldNumVenda.setText(Integer.toString(getRecebeVendaSelecionada()));
+        jTextFieldIdClinete.setText(Integer.toString(getReceberIdClienteSelecionado()));
         jTextFieldTotalVenda.setText(Double.toString(total));
+        
+        jTextFieldNomeCliente.setText(receberNomeCli);
         carregaVendaItens();
-        carregaClienteJdailog();
 
 
     }//GEN-LAST:event_jButtonBuscarVendaActionPerformed
@@ -695,6 +704,34 @@ public class viewPdv2 extends javax.swing.JFrame {
      */
     public void setRecebeVendaSelecionada(Integer recebeVendaSelecionada) {
         this.recebeVendaSelecionada = recebeVendaSelecionada;
+    }
+
+    /**
+     * @return the receberIdClienteSelecionado
+     */
+    public Integer getReceberIdClienteSelecionado() {
+        return receberIdClienteSelecionado;
+    }
+
+    /**
+     * @param receberIdClienteSelecionado the receberIdClienteSelecionado to set
+     */
+    public void setReceberIdClienteSelecionado(Integer receberIdClienteSelecionado) {
+        this.receberIdClienteSelecionado = receberIdClienteSelecionado;
+    }
+
+    /**
+     * @return the receberNomeCliSelecionado
+     */
+    public String getReceberNomeCliSelecionado() {
+        return receberNomeCliSelecionado;
+    }
+
+    /**
+     * @param receberNomeCliSelecionado the receberNomeCliSelecionado to set
+     */
+    public void setReceberNomeCliSelecionado(String receberNomeCliSelecionado) {
+        this.receberNomeCliSelecionado = receberNomeCliSelecionado;
     }
 
 }
