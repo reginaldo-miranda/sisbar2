@@ -3,14 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/laragon/www/sisbar2/src/controle/caixaControle.java</file>
-            <file>file:/C:/laragon/www/sisbar2/src/view/BuscarVenda.java</file>
-            <file>file:/C:/laragon/www/sisbar2/src/view/BuscaCliente.java</file>
             <file>file:/C:/laragon/www/sisbar2/src/model/MoPdv.java</file>
-            <file>file:/C:/laragon/www/sisbar2/src/view/viewQrCode.java</file>
+            <file>file:/C:/laragon/www/sisbar2/src/model/MoCartao.java</file>
+            <file>file:/C:/laragon/www/sisbar2/src/view/BuscarTipoCartao.java</file>
+            <file>file:/C:/laragon/www/sisbar2/src/model/MoProdutos.java</file>
+            <file>file:/C:/laragon/www/sisbar2/src/model/MoClientes.java</file>
+            <file>file:/C:/laragon/www/sisbar2/test/model/MoCartaoNGTest.java</file>
             <file>file:/C:/laragon/www/sisbar2/src/view/viewPdv2.java</file>
+            <file>file:/C:/laragon/www/sisbar2/src/controle/ClientesControle.java</file>
+            <file>file:/C:/laragon/www/sisbar2/src/view/viewCartao.java</file>
+            <file>file:/C:/laragon/www/sisbar2/src/controle/CartaoControle.java</file>
+            <file>file:/C:/laragon/www/sisbar2/src/model/MoGrupo.java</file>
             <file>file:/C:/laragon/www/sisbar2/src/model/MoCaixa.java</file>
-            <file>file:/C:/laragon/www/sisbar2/src/view/viewCaixa.java</file>
+            <file>file:/C:/laragon/www/sisbar2/src/view/Principal.java</file>
+            <file>file:/C:/laragon/www/sisbar2/src/view/viewClientes.java</file>
         </group>
     </open-files>
 </project-private>

@@ -330,6 +330,7 @@ public class viewCaixa extends javax.swing.JDialog {
             cartao = Double.parseDouble(jTextFieldCartao.getText());
         }
         somaRecebido();
+        
         jTextFieldCartao.setText("");
     }//GEN-LAST:event_jTextFieldCartaoFocusLost
 
