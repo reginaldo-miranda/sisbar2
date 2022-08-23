@@ -77,6 +77,8 @@
                           <Component id="jTextFieldPix" alignment="0" max="32767" attributes="0"/>
                           <Component id="jTextFieldCheque" alignment="0" max="32767" attributes="0"/>
                       </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jButtonGerarCodigoPix" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -126,6 +128,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jTextFieldPix" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonGerarCodigoPix" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -137,7 +140,7 @@
                   <Component id="jTextFieldTotalRecebido" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="28" max="32767" attributes="0"/>
+              <EmptySpace pref="25" max="32767" attributes="0"/>
               <Component id="jButtonFecharVenda" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
           </Group>
@@ -275,6 +278,14 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Total Recebido"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonGerarCodigoPix">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="gerar codigo"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonGerarCodigoPixActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

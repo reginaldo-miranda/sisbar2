@@ -10,6 +10,7 @@ import controle.caixaControle;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import static java.lang.Double.isNaN;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -37,6 +38,10 @@ public class viewCaixa extends javax.swing.JDialog {
 
     }
 
+    viewCaixa() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public void passarIdVenda(Integer receberNumVenda, Double total) {
 
         jTextFieldNumVenda.setText(Integer.toString(receberNumVenda));
@@ -51,7 +56,7 @@ public class viewCaixa extends javax.swing.JDialog {
         falta = novototal - totalRecebido;
 
         if (totalRecebido > novototal) {
-            troco =  totalRecebido - novototal;
+            troco = totalRecebido - novototal;
             jTextFieldTroco.setText(Double.toString(troco));
             jTextFieldFalta.setText("");
         } else {
@@ -89,6 +94,7 @@ public class viewCaixa extends javax.swing.JDialog {
         jTextFieldNumVenda = new javax.swing.JTextField();
         jTextFieldTotalRecebido = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+        jButtonGerarCodigoPix = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Caixa");
@@ -175,6 +181,13 @@ public class viewCaixa extends javax.swing.JDialog {
         jLabel9.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         jLabel9.setText("Total Recebido");
 
+        jButtonGerarCodigoPix.setText("gerar codigo");
+        jButtonGerarCodigoPix.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGerarCodigoPixActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -221,6 +234,8 @@ public class viewCaixa extends javax.swing.JDialog {
                             .addComponent(jTextFieldCartao, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldPix, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldCheque, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonGerarCodigoPix)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -256,7 +271,8 @@ public class viewCaixa extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldPix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jButtonGerarCodigoPix))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -265,7 +281,7 @@ public class viewCaixa extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldTotalRecebido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(jButtonFecharVenda)
                 .addGap(32, 32, 32))
         );
@@ -314,10 +330,16 @@ public class viewCaixa extends javax.swing.JDialog {
             cartao = Double.parseDouble(jTextFieldCartao.getText());
         }
         somaRecebido();
+        jTextFieldCartao.setText("");
     }//GEN-LAST:event_jTextFieldCartaoFocusLost
 
+    public void abrirJanela() {
+        viewQrCode qrcode = new viewQrCode();
+        qrcode.setVisible(true);
+        qrcode.setAlwaysOnTop(true);
+    }
     private void jTextFieldPixFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldPixFocusLost
-        //pegarDadosJtextfild();
+    
         if (jTextFieldPix.getText().isEmpty()) {
             jTextFieldPix.setText("");
             pix = 0.0;
@@ -325,6 +347,9 @@ public class viewCaixa extends javax.swing.JDialog {
             pix = Double.parseDouble(jTextFieldPix.getText());
         }
         somaRecebido();
+        JOptionPane.showMessageDialog(null, "pagar c pix", "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("qrcode-pix.png")));
+     
+
     }//GEN-LAST:event_jTextFieldPixFocusLost
 
     private void jTextFieldChequeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldChequeFocusLost
@@ -337,6 +362,11 @@ public class viewCaixa extends javax.swing.JDialog {
         }
         somaRecebido();
     }//GEN-LAST:event_jTextFieldChequeFocusLost
+
+    private void jButtonGerarCodigoPixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGerarCodigoPixActionPerformed
+        //  abrirJanela();
+        JOptionPane.showMessageDialog(null, "Mensagem Aleatória", "Título da Mensagem", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("qrcode-pix.png")));
+    }//GEN-LAST:event_jButtonGerarCodigoPixActionPerformed
 
     /**
      * @param args the command line arguments
@@ -383,6 +413,7 @@ public class viewCaixa extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonFecharVenda;
+    private javax.swing.JButton jButtonGerarCodigoPix;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
