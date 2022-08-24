@@ -4,17 +4,41 @@
  */
 package view;
 
+import controle.CartaoControle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.swing.table.DefaultTableModel;
+import model.MoCartao;
+import model.MoGrupo;
+
 /**
  *
  * @author suporte11-pc
  */
 public class viewCartao extends javax.swing.JFrame {
 
+    MoCartao mocartao = new MoCartao();
+    CartaoControle cartaocontrole = new CartaoControle();
+    private String idexistente;
+
     /**
      * Creates new form viewCartao
      */
     public viewCartao() {
         initComponents();
+        jTextFieldCodigo.setEditable(false);
+        jTextFieldNomeCartao.requestFocus();
+        carregarTipoCartao();
+    }
+
+    public void carregarTipoCartao() {
+        DefaultTableModel modelo = (DefaultTableModel) getjTableCadastroCartao().getModel();
+        for (MoCartao cartao : cartaocontrole.carregaCartao()) {
+
+            modelo.addRow(new Object[]{cartao.getId(), cartao.getCartao(), cartao.getBandeira(), cartao.getTaxa()});
+        }
     }
 
     /**
@@ -27,7 +51,7 @@ public class viewCartao extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableCadastroCartao = new javax.swing.JTable();
         jTextFieldCodigo = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldNomeCartao = new javax.swing.JTextField();
@@ -40,18 +64,15 @@ public class viewCartao extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cartoes");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableCadastroCartao.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Codigo", "Cartao", "Bandeira", "Taxa"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableCadastroCartao);
 
         jLabel1.setText("Cartao");
 
@@ -60,6 +81,11 @@ public class viewCartao extends javax.swing.JFrame {
         jLabel3.setText("Taxa");
 
         jButtonGravar.setText("Gravar");
+        jButtonGravar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGravarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -110,6 +136,23 @@ public class viewCartao extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGravarActionPerformed
+        mocartao.setCartao(jTextFieldNomeCartao.getText());
+        mocartao.setBandeira(jTextFieldBandeira.getText());
+        mocartao.setTaxa(Double.parseDouble(jTextFieldTaxa.getText()));
+
+        idexistente = jTextFieldCodigo.getText();
+        if (!idexistente.isEmpty()) {
+            mocartao.setId(Integer.parseInt(jTextFieldCodigo.getText()));
+        }
+        try {
+            cartaocontrole.salvar(mocartao);
+        } catch (Exception ex) {
+            Logger.getLogger(viewClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        carregarTipoCartao();
+    }//GEN-LAST:event_jButtonGravarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -145,16 +188,31 @@ public class viewCartao extends javax.swing.JFrame {
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonGravar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableCadastroCartao;
     private javax.swing.JTextField jTextFieldBandeira;
     private javax.swing.JTextField jTextFieldCodigo;
     private javax.swing.JTextField jTextFieldNomeCartao;
     private javax.swing.JTextField jTextFieldTaxa;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the jTableCadastroCartao
+     */
+    public javax.swing.JTable getjTableCadastroCartao() {
+        return jTableCadastroCartao;
+    }
+
+    /**
+     * @param jTableCadastroCartao the jTableCadastroCartao to set
+     */
+    public void setjTableCadastroCartao(javax.swing.JTable jTableCadastroCartao) {
+        this.jTableCadastroCartao = jTableCadastroCartao;
+    }
 }

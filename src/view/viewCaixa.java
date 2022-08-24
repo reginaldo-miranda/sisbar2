@@ -50,6 +50,9 @@ public class viewCaixa extends javax.swing.JDialog {
     }
 
     public void somaRecebido() {
+        if(totalRecebido  == novototal){
+            JOptionPane.showMessageDialog(null, "O VALOR JA E SUFICIENTE");
+        }
 
         totalRecebido = (dinheiro + cartao + pix + cheque);
         jTextFieldTotalRecebido.setText(Double.toString(totalRecebido));
@@ -98,6 +101,7 @@ public class viewCaixa extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Caixa");
+        setAutoRequestFocus(false);
 
         jButtonSair.setText("Sair");
         jButtonSair.addActionListener(new java.awt.event.ActionListener() {
@@ -234,7 +238,7 @@ public class viewCaixa extends javax.swing.JDialog {
                             .addComponent(jTextFieldCartao, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldPix, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldCheque, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jButtonGerarCodigoPix)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
@@ -317,8 +321,9 @@ public class viewCaixa extends javax.swing.JDialog {
             jTextFieldTroco.setText("");
         } else {
             dinheiro = Double.parseDouble(jTextFieldDinheiro.getText());
+            somaRecebido();
         }
-        somaRecebido();
+
     }//GEN-LAST:event_jTextFieldDinheiroFocusLost
 
     private void jTextFieldCartaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldCartaoFocusLost
@@ -328,28 +333,32 @@ public class viewCaixa extends javax.swing.JDialog {
             cartao = 0.0;
         } else {
             cartao = Double.parseDouble(jTextFieldCartao.getText());
+            somaRecebido();
+            BuscarTipoCartao dialog = new BuscarTipoCartao(new javax.swing.JFrame(), true);
+            dialog.setVisible(true);
         }
-        somaRecebido();
-        
+
         jTextFieldCartao.setText("");
+        jTextFieldPix.requestFocus();
     }//GEN-LAST:event_jTextFieldCartaoFocusLost
 
-    public void abrirJanela() {
+    /*  public void abrirJanela() {
         viewQrCode qrcode = new viewQrCode();
         qrcode.setVisible(true);
         qrcode.setAlwaysOnTop(true);
-    }
+    }*/
     private void jTextFieldPixFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldPixFocusLost
-    
+
         if (jTextFieldPix.getText().isEmpty()) {
             jTextFieldPix.setText("");
             pix = 0.0;
         } else {
             pix = Double.parseDouble(jTextFieldPix.getText());
+
+            JOptionPane.showMessageDialog(null, "pagar c pix", "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("qrcode-pix.png")));
+            somaRecebido();
         }
-        somaRecebido();
-        JOptionPane.showMessageDialog(null, "pagar c pix", "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("qrcode-pix.png")));
-     
+
 
     }//GEN-LAST:event_jTextFieldPixFocusLost
 
@@ -360,8 +369,9 @@ public class viewCaixa extends javax.swing.JDialog {
             cheque = 0.0;
         } else {
             cheque = Double.parseDouble(jTextFieldCheque.getText());
+            somaRecebido();
         }
-        somaRecebido();
+
     }//GEN-LAST:event_jTextFieldChequeFocusLost
 
     private void jButtonGerarCodigoPixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGerarCodigoPixActionPerformed

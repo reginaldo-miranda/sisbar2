@@ -4,18 +4,32 @@
  */
 package view;
 
+import controle.CartaoControle;
+import javax.swing.table.DefaultTableModel;
+import model.MoCartao;
+import model.MoProdutos;
+
 /**
  *
  * @author suporte11-pc
  */
 public class BuscarTipoCartao extends javax.swing.JDialog {
-
+     CartaoControle cartaocontrole = new CartaoControle();
     /**
      * Creates new form BuscarTipoCartao
      */
     public BuscarTipoCartao(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        carregarTipoCartao();
+    }
+    
+    public void carregarTipoCartao(){
+          DefaultTableModel modelo = (DefaultTableModel) getjTableBuscarCartao() .getModel();
+        for (MoCartao cartao : cartaocontrole.carregaCartao()) {
+
+            modelo.addRow(new Object[]{cartao.getId(), cartao.getCartao(), cartao.getBandeira(), cartao.getTaxa()});
+        }
     }
 
     /**
@@ -28,21 +42,21 @@ public class BuscarTipoCartao extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableBuscarCartao = new javax.swing.JTable();
         jButtonSelecionar = new javax.swing.JButton();
         jButtonSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableBuscarCartao.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "codigo", "Cartao", "Bandeira", "Taxa"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableBuscarCartao);
 
         jButtonSelecionar.setText("Selecionar");
 
@@ -127,11 +141,26 @@ public class BuscarTipoCartao extends javax.swing.JDialog {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSair;
     private javax.swing.JButton jButtonSelecionar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableBuscarCartao;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the jTableBuscarCartao
+     */
+    public javax.swing.JTable getjTableBuscarCartao() {
+        return jTableBuscarCartao;
+    }
+
+    /**
+     * @param jTableBuscarCartao the jTableBuscarCartao to set
+     */
+    public void setjTableBuscarCartao(javax.swing.JTable jTableBuscarCartao) {
+        this.jTableBuscarCartao = jTableBuscarCartao;
+    }
 }

@@ -5,8 +5,11 @@
 package controle;
 
 import dao.DaoGenerico;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import model.MoCartao;
 import model.MoClientes;
+import model.MoGrupo;
 
 /**
  *
@@ -17,6 +20,16 @@ public class CartaoControle extends DaoGenerico<MoCartao> {
     public CartaoControle() {
         
     }
+    
+        public java.util.List<MoCartao> carregaCartao() {
+
+        EntityManager em = getEM();
+
+        TypedQuery<MoCartao> consulta = (TypedQuery<MoCartao>) em.createNamedQuery("MoCartao.todos", MoCartao.class);
+
+        return consulta.getResultList();
+
+    } 
     
     
     

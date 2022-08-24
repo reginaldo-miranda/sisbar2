@@ -10,8 +10,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+
+@NamedQueries({
+        
+    @NamedQuery(name = "MoCartao.todos", query = "SELECT cart FROM MoCartao cart"),
+            
+   // @NamedQuery(name = "Moprodutos.id", query = "SELECT pr FROM MoProdutos pr where pr.Id = :idprod")
+})
 /**
  *
  * @author suporte11-pc
